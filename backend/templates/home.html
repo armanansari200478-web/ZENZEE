@@ -1,0 +1,96 @@
+{% extends 'base.html' %}
+
+{% block title %}ZENZEE — Good Fashion In Time | Streetwear & Oversized Fashion{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+<div class="container py-5">
+    <div class="row align-items-center g-5 py-4">
+        <div class="col-lg-7">
+            <span class="badge bg-danger bg-opacity-25 text-danger px-3 py-2 rounded-pill mb-3 border border-danger border-opacity-50">
+                ⚡ Inspired by Gen-Z • High Quality Streetwear
+            </span>
+            <h1 class="display-3 fw-extrabold text-white mb-3" style="letter-spacing: -2px; line-height: 1.1;">
+                GOOD FASHION <br>
+                <span style="background: linear-gradient(135deg, #FF2E63, #08D9D6); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">IN TIME.</span>
+            </h1>
+            <p class="lead text-secondary mb-4 style-paragraph" style="max-width: 600px;">
+                Fashionable clothing designed for teenagers & young adults. Premium oversized fits, streetwear aesthetics, and quality fabrics under budget.
+            </p>
+            <div class="d-flex flex-wrap gap-3">
+                <a href="{% url 'product_list' %}" class="btn btn-zenzee-primary btn-lg px-4 py-3">
+                    Explore Collection <i class="bi bi-arrow-right ms-2"></i>
+                </a>
+                <a href="{% url 'ai_stylist' %}" class="btn btn-zenzee-outline btn-lg px-4 py-3 text-info">
+                    <i class="bi bi-stars me-2"></i> Ask AI Stylist
+                </a>
+            </div>
+        </div>
+        <div class="col-lg-5 text-center">
+            <div class="zenzee-card p-4 text-start position-relative overflow-hidden" style="background: linear-gradient(145deg, #181C27, #10121B);">
+                <div class="d-flex align-items-center mb-3">
+                    <span class="badge bg-info bg-opacity-25 text-info px-3 py-2 rounded-pill border border-info border-opacity-50">
+                        🔥 Trending Drop #01
+                    </span>
+                </div>
+                <h3 class="text-white">ZENZEE Cyberpunk Oversized Hoodie</h3>
+                <p class="text-secondary small">Heavyweight 400 GSM Fleece • Bio-Washed • Streetwear Fit</p>
+                <div class="d-flex align-items-center justify-content-between mt-4">
+                    <div>
+                        <span class="h3 text-white fw-bold me-2">₹1,499</span>
+                        <span class="text-muted text-decoration-line-through me-2">₹2,999</span>
+                        <span class="badge-sale">50% OFF</span>
+                    </div>
+                    <a href="{% url 'product_list' %}" class="btn btn-zenzee-primary btn-sm">Shop Now</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Features Grid -->
+<div class="container py-4">
+    <div class="row g-4 text-center">
+        <div class="col-md-4">
+            <div class="zenzee-card p-4 h-100">
+                <div class="rounded-circle bg-danger bg-opacity-10 text-danger p-3 d-inline-block mb-3">
+                    <i class="bi bi-lightning-charge-fill fs-3"></i>
+                </div>
+                <h5 class="text-white">Good Fashion In Time</h5>
+                <p class="text-secondary small mb-0">Express dispatch across Delhi & India with live order tracking.</p>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="zenzee-card p-4 h-100">
+                <div class="rounded-circle bg-info bg-opacity-10 text-info p-3 d-inline-block mb-3">
+                    <i class="bi bi-wallet2 fs-3"></i>
+                </div>
+                <h5 class="text-white">Budget Friendly</h5>
+                <p class="text-secondary small mb-0">High quality fabrics directly from top manufacturers without middleman markups.</p>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="zenzee-card p-4 h-100">
+                <div class="rounded-circle bg-warning bg-opacity-10 text-warning p-3 d-inline-block mb-3">
+                    <i class="bi bi-stars fs-3"></i>
+                </div>
+                <h5 class="text-white">AI Stylist Included</h5>
+                <p class="text-secondary small mb-0">Get instant outfit recommendations based on your budget & style preferences.</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- AI Banner -->
+<div class="container py-5">
+    <div class="zenzee-card p-5 text-center position-relative overflow-hidden" style="background: linear-gradient(135deg, rgba(255,46,99,0.1), rgba(8,217,214,0.1)); border-color: rgba(8,217,214,0.3);">
+        <h2 class="text-white mb-2"><i class="bi bi-stars text-info me-2"></i> Meet Your Personal AI Fashion Assistant</h2>
+        <p class="text-secondary mx-auto mb-4" style="max-width: 600px;">
+            Not sure what matches your cargo pants or oversized graphic tee? Chat with our AI assistant to get instant outfit suggestions under your budget!
+        </p>
+        <a href="{% url 'ai_stylist' %}" class="btn btn-zenzee-primary btn-lg px-4">
+            Chat with AI Stylist <i class="bi bi-chat-dots-fill ms-2"></i>
+        </a>
+    </div>
+</div>
+{% endblock %}

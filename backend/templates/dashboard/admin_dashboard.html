@@ -1,0 +1,88 @@
+{% extends 'base.html' %}
+
+{% block title %}Admin Operations Control Panel — ZENZEE{% endblock %}
+
+{% block content %}
+<div class="container py-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <h2 class="text-white mb-1"><i class="bi bi-speedometer2 text-danger me-2"></i> ZENZEE Admin Dashboard</h2>
+            <p class="text-secondary small mb-0">Platform analytics, inventory, and order fulfillment tracking.</p>
+        </div>
+        <a href="/admin/" class="btn btn-zenzee-primary px-4 py-2" target="_blank">
+            Open Django Admin <i class="bi bi-box-arrow-up-right ms-1"></i>
+        </a>
+    </div>
+
+    <!-- Analytics Stat Cards -->
+    <div class="row g-4 mb-4">
+        <div class="col-md-3">
+            <div class="zenzee-card p-4 text-center border-danger border-opacity-50">
+                <i class="bi bi-currency-rupee fs-2 text-danger mb-2 d-block"></i>
+                <h6 class="text-secondary small text-uppercase mb-1">Total Revenue</h6>
+                <h3 class="text-white font-monospace mb-0">₹{{ total_revenue }}</h3>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="zenzee-card p-4 text-center border-info border-opacity-50">
+                <i class="bi bi-bag-check fs-2 text-info mb-2 d-block"></i>
+                <h6 class="text-secondary small text-uppercase mb-1">Total Orders</h6>
+                <h3 class="text-white font-monospace mb-0">{{ total_orders }}</h3>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="zenzee-card p-4 text-center border-warning border-opacity-50">
+                <i class="bi bi-tag fs-2 text-warning mb-2 d-block"></i>
+                <h6 class="text-secondary small text-uppercase mb-1">Total Products</h6>
+                <h3 class="text-white font-monospace mb-0">{{ total_products }}</h3>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="zenzee-card p-4 text-center border-success border-opacity-50">
+                <i class="bi bi-people fs-2 text-success mb-2 d-block"></i>
+                <h6 class="text-secondary small text-uppercase mb-1">Registered Users</h6>
+                <h3 class="text-white font-monospace mb-0">{{ total_users }}</h3>
+            </div>
+        </div>
+    </div>
+
+    <!-- Recent Orders Table -->
+    <div class="zenzee-card p-4">
+        <h5 class="text-white mb-3">Recent Platform Orders</h5>
+        <div class="table-responsive">
+            <table class="table table-dark table-borderless align-middle mb-0">
+                <thead>
+                    <tr class="text-secondary border-bottom border-secondary small">
+                        <th>Order Number</th>
+                        <th>Customer</th>
+                        <th>Phone</th>
+                        <th>Amount</th>
+                        <th>Status</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for order in recent_orders %}
+                        <tr class="border-bottom border-secondary">
+                            <td class="fw-bold text-white py-3">#{{ order.order_number }}</td>
+                            <td>{{ order.full_name }}</td>
+                            <td class="text-secondary small">{{ order.phone }}</td>
+                            <td class="text-white font-monospace">₹{{ order.total_amount }}</td>
+                            <td><span class="badge bg-info p-2 px-3">{{ order.status }}</span></td>
+                            <td>
+                                <a href="{% url 'order_detail' order.order_number %}" class="btn btn-zenzee-outline btn-sm px-3">
+                                    Manage
+                                </a>
+                            </td>
+                        </tr>
+                    {% empty %}
+                        <tr>
+                            <td colspan="6" class="text-center py-4 text-secondary">No orders recorded yet.</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}

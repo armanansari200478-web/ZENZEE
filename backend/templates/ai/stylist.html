@@ -1,0 +1,119 @@
+{% extends 'base.html' %}
+
+{% block title %}AI Fashion Stylist Assistant — ZENZEE{% endblock %}
+
+{% block content %}
+<div class="container py-4">
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <div class="zenzee-card p-4 p-md-5">
+                <div class="d-flex align-items-center mb-4 pb-3 border-bottom border-secondary">
+                    <div class="rounded-circle bg-info bg-opacity-25 text-info p-3 me-3 border border-info">
+                        <i class="bi bi-robot fs-2"></i>
+                    </div>
+                    <div>
+                        <h3 class="text-white mb-0">ZENZEE AI Fashion Stylist</h3>
+                        <p class="text-secondary small mb-0">Ask for outfit suggestions, budget matches, or streetwear styling advice!</p>
+                    </div>
+                </div>
+
+                <!-- Chat Box -->
+                <div id="chatBox" class="p-3 mb-4 rounded-3 bg-dark border border-secondary overflow-auto" style="height: 380px;">
+                    <div class="d-flex mb-3">
+                        <div class="zenzee-card p-3 bg-dark border-secondary me-auto" style="max-width: 80%;">
+                            <strong class="text-info d-block mb-1"><i class="bi bi-stars"></i> ZENZEE AI</strong>
+                            <p class="text-light small mb-0">Yo! What's up? Tell me what you're looking for today (e.g. <em>"Suggest an oversized hoodie under 1500"</em> or <em>"Streetwear cargo pants fit"</em>).</p>
+                        </div>
+                    </div>
+
+                    {% for chat in chat_history %}
+                        <div class="d-flex mb-3 text-end">
+                            <div class="btn-zenzee-primary p-3 ms-auto text-start" style="max-width: 80%; border-radius: 16px;">
+                                <strong class="d-block mb-1 text-white">You</strong>
+                                <p class="small mb-0">{{ chat.user_prompt }}</p>
+                            </div>
+                        </div>
+                        <div class="d-flex mb-3">
+                            <div class="zenzee-card p-3 bg-dark border-secondary me-auto" style="max-width: 80%;">
+                                <strong class="text-info d-block mb-1"><i class="bi bi-stars"></i> ZENZEE AI</strong>
+                                <p class="text-light small mb-0">{{ chat.ai_response }}</p>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+
+                <!-- Prompt Input Form -->
+                <form id="aiForm" class="d-flex gap-2">
+                    {% csrf_token %}
+                    <input type="text" id="promptInput" class="form-control bg-dark border-secondary text-white py-3" placeholder="Type your fashion query or budget request..." required>
+                    <button type="submit" class="btn btn-zenzee-primary px-4 py-3">
+                        Ask <i class="bi bi-send-fill ms-1"></i>
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    document.getElementById('aiForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        const input = document.getElementById('promptInput');
+        const prompt = input.value.trim();
+        if (!prompt) return;
+
+        const chatBox = document.getElementById('chatBox');
+
+        // Append User Message
+        const userDiv = document.createElement('div');
+        userDiv.className = 'd-flex mb-3 text-end';
+        userDiv.innerHTML = `
+            <div class="btn-zenzee-primary p-3 ms-auto text-start" style="max-width: 80%; border-radius: 16px;">
+                <strong class="d-block mb-1 text-white">You</strong>
+                <p class="small mb-0">${prompt}</p>
+            </div>
+        `;
+        chatBox.appendChild(userDiv);
+        input.value = '';
+        chatBox.scrollTop = chatBox.scrollHeight;
+
+        // Fetch AI Response
+        const formData = new FormData();
+        formData.append('prompt', prompt);
+        formData.append('csrfmiddlewaretoken', '{{ csrf_token }}');
+
+        fetch("{% url 'ai_query_api' %}", {
+            method: 'POST',
+            body: formData
+        })
+        .then(res => res.json())
+        .then(data => {
+            const aiDiv = document.createElement('div');
+            aiDiv.className = 'd-flex mb-3';
+            let productListHtml = '';
+            if (data.products && data.products.length > 0) {
+                productListHtml = '<div class="mt-2 pt-2 border-top border-secondary">';
+                data.products.forEach(p => {
+                    productListHtml += `<a href="/products/${p.slug}/" class="badge bg-danger text-white text-decoration-none me-1 mb-1 p-2">🔥 ${p.name} - ₹${p.price}</a>`;
+                });
+                productListHtml += '</div>';
+            }
+
+            aiDiv.innerHTML = `
+                <div class="zenzee-card p-3 bg-dark border-secondary me-auto" style="max-width: 80%;">
+                    <strong class="text-info d-block mb-1"><i class="bi bi-stars"></i> ZENZEE AI</strong>
+                    <p class="text-light small mb-0">${data.response}</p>
+                    ${productListHtml}
+                </div>
+            `;
+            chatBox.appendChild(aiDiv);
+            chatBox.scrollTop = chatBox.scrollHeight;
+        })
+        .catch(err => {
+            console.error(err);
+        });
+    });
+</script>
+{% endblock %}

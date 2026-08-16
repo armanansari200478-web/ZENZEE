@@ -1,0 +1,78 @@
+{% extends 'base.html' %}
+
+{% block title %}Complete Payment — ZENZEE{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="zenzee-card p-4 text-center">
+        <h3 class="text-white mb-3">Proceed to Payment</h3>
+        <p class="text-secondary mb-4">Order: <strong>{{ order.order_number }}</strong></p>
+        <p class="text-white mb-4">Amount: <strong>₹{{ order.total_amount }}</strong></p>
+        <button id="rzp-button" class="btn btn-zenzee-primary px-4 py-3">Pay Now</button>
+    </div>
+</div>
+
+<!-- Razorpay checkout script -->
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+<script>
+    (function () {
+        const keyId = '{{ razorpay_key_id|default:"" }}';
+        const rpOrderId = '{{ razorpay_order_id|default:"" }}';
+
+        function postVerify(payload) {
+            const data = new FormData();
+            Object.keys(payload).forEach(k => data.append(k, payload[k]));
+            fetch('{% url 'payment_success' %}', { method: 'POST', body: data })
+                .then(r => r.json()).then(j => {
+                    if (j.ok) {
+                        window.location.href = "{% url 'order_detail' order.order_number %}";
+                    } else {
+                        alert('Payment verification failed: ' + (j.error || 'Unknown'));
+                    }
+                }).catch(err => alert('Error verifying payment: ' + err));
+        }
+
+        if (!keyId) {
+            // Demo mode: directly mark order paid on server when button clicked
+            document.getElementById('rzp-button').addEventListener('click', function (e) {
+                postVerify({
+                    razorpay_payment_id: 'demo_'.concat(Date.now()),
+                    razorpay_order_id: rpOrderId || 'demo_order',
+                    razorpay_signature: 'demo_signature',
+                    order_number: '{{ order.order_number }}'
+                });
+                e.preventDefault();
+            });
+        } else {
+            const options = {
+                key: keyId,
+                amount: '{{ amount }}',
+                currency: 'INR',
+                name: 'ZENZEE',
+                description: 'Order {{ order.order_number }}',
+                order_id: rpOrderId,
+                handler: function (response) {
+                    postVerify({
+                        razorpay_payment_id: response.razorpay_payment_id,
+                        razorpay_order_id: response.razorpay_order_id,
+                        razorpay_signature: response.razorpay_signature,
+                        order_number: '{{ order.order_number }}'
+                    });
+                },
+                prefill: {
+                    name: '{{ order.full_name }}',
+                    email: '{{ order.email }}',
+                    contact: '{{ order.phone }}'
+                },
+                theme: { color: '#e11d48' }
+            };
+
+            const rzp = new Razorpay(options);
+            document.getElementById('rzp-button').addEventListener('click', function (e) {
+                rzp.open();
+                e.preventDefault();
+            });
+        }
+    })();
+</script>
+{% endblock %}

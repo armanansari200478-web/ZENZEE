@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}ZENZEE — Good Fashion In Time{% endblock %}</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Bootstrap 5 CSS & Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+
+    <style>
+        :root {
+            --zenzee-dark: #0B0D12;
+            --zenzee-card: #141721;
+            --zenzee-card-hover: #1D2230;
+            --zenzee-border: #262B3A;
+            --zenzee-primary: #FF2E63;
+            --zenzee-accent: #08D9D6;
+            --zenzee-gold: #FFB703;
+            --zenzee-text: #F4F6F8;
+            --zenzee-muted: #94A3B8;
+        }
+
+        body {
+            background-color: var(--zenzee-dark);
+            color: var(--zenzee-text);
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        h1, h2, h3, h4, h5, h6, .brand-font {
+            font-family: 'Outfit', sans-serif;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+        }
+
+        /* Glassmorphism Navbar */
+        .navbar-zenzee {
+            background: rgba(11, 13, 18, 0.88);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--zenzee-border);
+            padding: 0.9rem 0;
+        }
+
+        .brand-logo {
+            font-size: 1.9rem;
+            font-weight: 800;
+            letter-spacing: -1.5px;
+            background: linear-gradient(135deg, var(--zenzee-primary), var(--zenzee-accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .nav-link {
+            font-weight: 500;
+            color: #CBD5E1 !important;
+            transition: color 0.2s ease;
+            padding: 0.5rem 1rem !important;
+        }
+
+        .nav-link:hover, .nav-link.active {
+            color: #ffffff !important;
+        }
+
+        /* Primary Button */
+        .btn-zenzee-primary {
+            background: linear-gradient(135deg, #FF2E63 0%, #FF527B 100%);
+            color: #ffffff !important;
+            border: none;
+            font-weight: 600;
+            padding: 0.65rem 1.4rem;
+            border-radius: 12px;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 4px 20px rgba(255, 46, 99, 0.35);
+        }
+
+        .btn-zenzee-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 28px rgba(255, 46, 99, 0.55);
+        }
+
+        .btn-zenzee-outline {
+            background: transparent;
+            border: 1px solid var(--zenzee-border);
+            color: var(--zenzee-text) !important;
+            border-radius: 12px;
+            font-weight: 600;
+            padding: 0.65rem 1.4rem;
+            transition: all 0.3s ease;
+        }
+
+        .btn-zenzee-outline:hover {
+            border-color: var(--zenzee-accent);
+            color: var(--zenzee-accent) !important;
+            background: rgba(8, 217, 214, 0.08);
+        }
+
+        /* Card Styles */
+        .zenzee-card {
+            background: var(--zenzee-card);
+            border: 1px solid var(--zenzee-border);
+            border-radius: 20px;
+            transition: all 0.3s ease;
+        }
+
+        .product-card {
+            background: var(--zenzee-card);
+            border: 1px solid var(--zenzee-border);
+            border-radius: 20px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .product-card:hover {
+            transform: translateY(-6px);
+            background: var(--zenzee-card-hover);
+            border-color: rgba(255, 46, 99, 0.4);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.6);
+        }
+
+        .badge-sale {
+            background: rgba(255, 46, 99, 0.15);
+            color: var(--zenzee-primary);
+            border: 1px solid rgba(255, 46, 99, 0.3);
+            font-weight: 700;
+            border-radius: 8px;
+            padding: 0.35rem 0.65rem;
+        }
+
+        /* Footer */
+        .footer-zenzee {
+            margin-top: auto;
+            border-top: 1px solid var(--zenzee-border);
+            background: #07080C;
+            padding: 3rem 0 1.5rem;
+        }
+
+        .form-control, .form-select {
+            background-color: #0F121A;
+            border: 1px solid var(--zenzee-border);
+            color: #ffffff;
+            border-radius: 12px;
+            padding: 0.75rem 1rem;
+        }
+
+        .form-control:focus, .form-select:focus {
+            background-color: #141824;
+            border-color: var(--zenzee-primary);
+            color: #ffffff;
+            box-shadow: 0 0 0 0.25rem rgba(255, 46, 99, 0.2);
+        }
+    </style>
+    {% block extra_css %}{% endblock %}
+</head>
+<body>
+
+    <!-- Header / Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark navbar-zenzee sticky-top">
+        <div class="container">
+            <a class="navbar-brand brand-logo d-flex align-items-center me-4" href="{% url 'home' %}">
+                ZENZEE
+            </a>
+            <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#zenzeeNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="zenzeeNav">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'home' %}">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'product_list' %}">Shop All</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-info fw-semibold" href="{% url 'ai_stylist' %}">
+                            <i class="bi bi-stars text-info me-1"></i> AI Stylist
+                        </a>
+                    </li>
+                </ul>
+
+                <!-- Search Bar -->
+                <form class="d-flex me-3" action="{% url 'product_list' %}" method="GET">
+                    <div class="input-group">
+                        <input class="form-control form-control-sm border-secondary text-white bg-dark" type="search" name="q" placeholder="Search streetwear, hoodies..." aria-label="Search">
+                        <button class="btn btn-outline-secondary" type="submit"><i class="bi bi-search"></i></button>
+                    </div>
+                </form>
+
+                <div class="d-flex align-items-center gap-2">
+                    <a href="{% url 'wishlist' %}" class="btn btn-zenzee-outline p-2 px-3 me-1 text-decoration-none" title="Wishlist">
+                        <i class="bi bi-heart text-danger"></i>
+                    </a>
+                    <a href="{% url 'cart_detail' %}" class="btn btn-zenzee-outline p-2 px-3 me-2 text-decoration-none" title="Shopping Cart">
+                        <i class="bi bi-bag-check text-info"></i>
+                    </a>
+
+                    {% if user.is_authenticated %}
+                        <div class="dropdown">
+                            <button class="btn btn-zenzee-primary dropdown-toggle py-2 px-3" type="button" data-bs-toggle="dropdown">
+                                <i class="bi bi-person-circle me-1"></i> {{ user.username }}
+                            </button>
+                            <ul class="dropdown-menu dropdown-menu-dark dropdown-menu-end border-secondary shadow-lg">
+                                <li><a class="dropdown-item py-2" href="{% url 'profile' %}"><i class="bi bi-person me-2 text-info"></i> Profile</a></li>
+                                <li><a class="dropdown-item py-2" href="{% url 'order_history' %}"><i class="bi bi-box-seam me-2 text-warning"></i> My Orders</a></li>
+                                {% if user.is_staff %}
+                                    <li><hr class="dropdown-divider border-secondary"></li>
+                                    <li><a class="dropdown-item py-2 text-danger fw-semibold" href="{% url 'admin_dashboard' %}"><i class="bi bi-speedometer2 me-2"></i> Admin Panel</a></li>
+                                {% endif %}
+                                <li><hr class="dropdown-divider border-secondary"></li>
+                                <li><a class="dropdown-item py-2 text-muted" href="{% url 'logout' %}"><i class="bi bi-box-arrow-right me-2"></i> Logout</a></li>
+                            </ul>
+                        </div>
+                    {% else %}
+                        <a href="{% url 'login' %}" class="btn btn-zenzee-outline py-2 px-3 text-decoration-none">Log In</a>
+                        <a href="{% url 'register' %}" class="btn btn-zenzee-primary py-2 px-3 text-decoration-none">Sign Up</a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Flash Messages -->
+    <div class="container mt-3">
+        {% if messages %}
+            {% for message in messages %}
+                <div class="alert alert-{{ message.tags }} alert-dismissible fade show bg-dark border-secondary text-light shadow-sm" role="alert">
+                    <i class="bi bi-info-circle-fill me-2 text-info"></i> {{ message }}
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="alert"></button>
+                </div>
+            {% endfor %}
+        {% endif %}
+    </div>
+
+    <!-- Main Content -->
+    <main class="py-4">
+        {% block content %}{% endblock %}
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer-zenzee text-muted">
+        <div class="container">
+            <div class="row g-4 mb-4 text-start">
+                <div class="col-lg-5">
+                    <h3 class="brand-logo mb-2">ZENZEE</h3>
+                    <p class="text-secondary small me-lg-4">
+                        Helping teenagers and young adults buy high-fashion clothing under budget without compromising quality. India's largest youth fashion platform vision.
+                    </p>
+                    <span class="badge bg-danger bg-opacity-25 text-danger px-3 py-2 rounded-pill border border-danger border-opacity-50">
+                        GOOD FASHION IN TIME
+                    </span>
+                </div>
+                <div class="col-6 col-lg-3">
+                    <h6 class="text-white mb-3">Categories</h6>
+                    <ul class="list-unstyled small text-secondary">
+                        <li class="mb-2"><a href="{% url 'product_list' %}?category=streetwear" class="text-reset text-decoration-none">Streetwear Collection</a></li>
+                        <li class="mb-2"><a href="{% url 'product_list' %}?category=oversized" class="text-reset text-decoration-none">Oversized Hoodies & Tees</a></li>
+                        <li class="mb-2"><a href="{% url 'product_list' %}?category=cargo-pants" class="text-reset text-decoration-none">Cargo & Utility Pants</a></li>
+                    </ul>
+                </div>
+                <div class="col-6 col-lg-4">
+                    <h6 class="text-white mb-3">AI & Platform</h6>
+                    <ul class="list-unstyled small text-secondary">
+                        <li class="mb-2"><a href="{% url 'ai_stylist' %}" class="text-info text-decoration-none"><i class="bi bi-stars"></i> AI Fashion Assistant</a></li>
+                        <li class="mb-2"><a href="{% url 'order_history' %}" class="text-reset text-decoration-none">Order Tracking</a></li>
+                        <li class="mb-2"><a href="{% url 'profile' %}" class="text-reset text-decoration-none">User Profile Management</a></li>
+                    </ul>
+                </div>
+            </div>
+            <hr class="border-secondary my-4">
+            <div class="d-flex flex-column flex-md-row justify-content-between align-items-center small text-secondary">
+                <p class="mb-0">&copy; 2026 ZENZEE Fashion Technologies. Designed & Architected by Arman.</p>
+                <p class="mb-0 mt-2 mt-md-0">Inspired by Gen-Z • High Quality Streetwear</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap 5 JS Bundle -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    {% block extra_js %}{% endblock %}
+</body>
+</html>

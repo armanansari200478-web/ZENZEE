@@ -1,0 +1,181 @@
+{% extends 'base.html' %}
+
+{% block title %}Checkout — ZENZEE Order Processing{% endblock %}
+
+{% block content %}
+<div class="container py-4">
+    <h2 class="text-white mb-4"><i class="bi bi-credit-card text-danger me-2"></i> Express Checkout</h2>
+
+    <form method="POST">
+        {% csrf_token %}
+        <div class="row g-4">
+            <!-- Shipping Details Form -->
+            <div class="col-lg-7">
+                <div class="zenzee-card p-4 p-md-5">
+                    <h5 class="text-white mb-4">1. Shipping Address</h5>
+                    <div class="row g-3">
+                        {% for field in form %}
+                        {% if field.name != 'payment_method' %}
+                        <div class="{% if field.name == 'address' %}col-12{% else %}col-md-6{% endif %}">
+                            <label class="form-label text-light small fw-semibold">{{ field.label }}</label>
+                            {{ field }}
+                            {% if field.errors %}
+                            <div class="text-danger small mt-1">{{ field.errors.0 }}</div>
+                            {% endif %}
+                        </div>
+                        {% endif %}
+                        {% endfor %}
+                    </div>
+
+                    <h5 class="text-white mt-5 mb-3">2. Payment Method</h5>
+                    {% if form.non_field_errors %}
+                    <div class="alert alert-danger mb-3">{{ form.non_field_errors }}</div>
+                    {% endif %}
+
+                    <div class="row g-3">
+                        <!-- COD Option -->
+                        <div class="col-md-6">
+                            <label class="payment-card payment-card-cod p-3 w-100 h-100" style="cursor: pointer; display: flex; flex-direction: column;">
+                                <input type="radio" name="payment_method" value="cod" {% if form.payment_method.value == 'cod' or not form.payment_method.value %}checked{% endif %} style="display: none;">
+                                <div class="d-flex align-items-center gap-2 mb-2">
+                                    <i class="bi bi-house-door" style="font-size: 1.5rem; color: #10b981;"></i>
+                                    <span class="fw-bold text-white">Cash on Delivery</span>
+                                </div>
+                                <small class="text-light">Pay when your order arrives at your doorstep. No online payment needed.</small>
+                            </label>
+                        </div>
+
+                        <!-- UPI Option -->
+                        <div class="col-md-6">
+                            <label class="payment-card payment-card-upi p-3 w-100 h-100" style="cursor: pointer; display: flex; flex-direction: column;">
+                                <input type="radio" name="payment_method" value="upi" {% if form.payment_method.value == 'upi' %}checked{% endif %} style="display: none;">
+                                <div class="d-flex align-items-center gap-2 mb-2">
+                                    <i class="bi bi-telephone-fill" style="font-size: 1.5rem; color: #3b82f6;"></i>
+                                    <span class="fw-bold text-white">UPI Payment</span>
+                                </div>
+                                <small class="text-light">Transfer money instantly via Google Pay, PhonePe, or Paytm.</small>
+                            </label>
+                        </div>
+
+                        <!-- Card Option -->
+                        <div class="col-md-6">
+                            <label class="payment-card payment-card-card p-3 w-100 h-100" style="cursor: pointer; display: flex; flex-direction: column;">
+                                <input type="radio" name="payment_method" value="card" {% if form.payment_method.value == 'card' %}checked{% endif %} style="display: none;">
+                                <div class="d-flex align-items-center gap-2 mb-2">
+                                    <i class="bi bi-credit-card-fill" style="font-size: 1.5rem; color: #f59e0b;"></i>
+                                    <span class="fw-bold text-white">Debit / Credit Card</span>
+                                </div>
+                                <small class="text-light">Visa, Mastercard secure checkout via Razorpay. Test: 4111 1111 1111 1111</small>
+                            </label>
+                        </div>
+
+                        <!-- Wallet Option -->
+                        <div class="col-md-6">
+                            <label class="payment-card payment-card-wallet p-3 w-100 h-100" style="cursor: pointer; display: flex; flex-direction: column;">
+                                <input type="radio" name="payment_method" value="wallet" {% if form.payment_method.value == 'wallet' %}checked{% endif %} style="display: none;">
+                                <div class="d-flex align-items-center gap-2 mb-2">
+                                    <i class="bi bi-wallet2" style="font-size: 1.5rem; color: #ef4444;"></i>
+                                    <span class="fw-bold text-white">Wallet / Digital</span>
+                                </div>
+                                <small class="text-light">Use your stored wallet balance or digital payment apps.</small>
+                            </label>
+                        </div>
+                    </div>
+
+                    <style>
+                        .payment-card {
+                            border: 2px solid transparent;
+                            border-radius: 8px;
+                            transition: all 0.3s ease;
+                            background-color: rgba(31, 41, 55, 0.6);
+                            position: relative;
+                        }
+                        .payment-card:hover {
+                            background-color: rgba(55, 65, 81, 0.8);
+                            transform: translateY(-2px);
+                        }
+                        .payment-card input:checked + div,
+                        .payment-card input[type="radio"]:checked ~ div {
+                            font-weight: 700;
+                        }
+                        .payment-card input[type="radio"]:checked ~ div span {
+                            font-weight: 700;
+                        }
+                        .payment-card-cod input:checked ~ * {
+                            border-color: #10b981;
+                        }
+                        .payment-card-cod input:checked {
+                            border-color: #10b981;
+                        }
+                        .payment-card-cod {
+                            border-color: #10b981;
+                        }
+                        .payment-card-cod input[type="radio"]:checked ~ div i {
+                            color: #10b981 !important;
+                        }
+                        
+                        .payment-card-upi {
+                            border-color: #3b82f6;
+                        }
+                        .payment-card-upi input[type="radio"]:checked ~ div i {
+                            color: #3b82f6 !important;
+                        }
+                        
+                        .payment-card-card {
+                            border-color: #f59e0b;
+                        }
+                        .payment-card-card input[type="radio"]:checked ~ div i {
+                            color: #f59e0b !important;
+                        }
+                        
+                        .payment-card-wallet {
+                            border-color: #ef4444;
+                        }
+                        .payment-card-wallet input[type="radio"]:checked ~ div i {
+                            color: #ef4444 !important;
+                        }
+                    </style>
+                </div>
+            </div>
+
+            <!-- Order Review Summary -->
+            <div class="col-lg-5">
+                <div class="zenzee-card p-4">
+                    <h5 class="text-white mb-4">Order Summary</h5>
+
+                    {% for item in cart.items.all %}
+                    <div
+                        class="d-flex justify-content-between align-items-center mb-3 pb-3 border-bottom border-secondary">
+                        <div>
+                            <h6 class="text-white mb-0 fs-6">{{ item.product.name }}</h6>
+                            <small class="text-muted">Qty: {{ item.quantity }} {% if item.size %}| Size: {{
+                                item.size.code }}{% endif %}</small>
+                        </div>
+                        <span class="text-white font-monospace">₹{{ item.get_subtotal }}</span>
+                    </div>
+                    {% endfor %}
+
+                    <div class="d-flex justify-content-between mb-2 text-secondary">
+                        <span>Items Total</span>
+                        <span class="text-white">₹{{ subtotal }}</span>
+                    </div>
+                    <div class="d-flex justify-content-between mb-3 text-secondary">
+                        <span>Shipping Fee</span>
+                        <span class="text-info font-monospace">{% if shipping_fee == 0 %}FREE{% else %}₹{{ shipping_fee
+                            }}{% endif %}</span>
+                    </div>
+                    <hr class="border-secondary my-3">
+                    <div class="d-flex justify-content-between mb-4">
+                        <span class="h5 text-white mb-0">Total Amount</span>
+                        <span class="h4 text-danger mb-0 font-monospace">₹{{ total_amount }}</span>
+                    </div>
+
+                    <button type="submit" class="btn btn-zenzee-primary w-100 py-3 fs-5">
+                        Place ZENZEE Order <i class="bi bi-bag-check-fill ms-2"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+{% endblock %}
