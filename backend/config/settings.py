@@ -22,9 +22,11 @@ from dotenv import load_dotenv
 # BASE_DIR is used to locate the .env file
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
-BASE_DIR = Path(__file__).resolve().parent.parent
+# Go up 3 levels from config/settings.py to reach project root
+BASE_DIR = Path(__file__).resolve().parent.parent.parent
 
 # Load .env file if present (local development convenience)
+# .env is located at project root, not in backend folder
 load_dotenv(BASE_DIR / '.env')
 
 
@@ -86,7 +88,7 @@ ROOT_URLCONF = 'config.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [BASE_DIR / 'templates'],
+        'DIRS': [BASE_DIR / 'backend' / 'templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -107,7 +109,7 @@ WSGI_APPLICATION = 'config.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'NAME': BASE_DIR / 'backend' / 'db.sqlite3',
     }
 }
 
@@ -180,11 +182,11 @@ AUTH_USER_MODEL = 'accounts.User'
 
 # Media Files (User uploads like profile pictures, product images)
 MEDIA_URL = '/media/'
-MEDIA_ROOT = BASE_DIR / 'media'
+MEDIA_ROOT = BASE_DIR / 'backend' / 'media'
 
 # Additional Static Files directory
 STATICFILES_DIRS = [
-    BASE_DIR / 'static',
+    BASE_DIR / 'backend' / 'static',
 ]
-STATIC_ROOT = BASE_DIR / 'staticfiles'
+STATIC_ROOT = BASE_DIR / 'backend' / 'staticfiles'
 
