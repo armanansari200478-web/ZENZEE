@@ -6,7 +6,7 @@ __pycache__/
 *.pyc
 
 # Django database
-db.sqlite3
+db.sqlite3 
 
 # Environment variables
 .env
