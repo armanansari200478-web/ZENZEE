@@ -17,17 +17,17 @@
             --bg-main: #08090C;
             --bg-surface: #12141C;
             --bg-surface-hover: #191C28;
-            --border-color: #242836;
-            --border-hover: #3E4456;
+            --border-color: #262A38;
+            --border-hover: #454D63;
             
             --brand-white: #FFFFFF;
-            --brand-light: #F1F5F9;
-            --brand-silver: #94A3B8;
-            --brand-muted: #64748B;
+            --brand-light: #F8FAFC;
+            --brand-silver: #E2E8F0;
+            --brand-muted: #CBD5E1;
             
             --accent-red: #E63946;
             --text-heading: #FFFFFF;
-            --text-body: #94A3B8;
+            --text-body: #E2E8F0;
         }
 
         * {
@@ -38,7 +38,7 @@
 
         body {
             background-color: var(--bg-main);
-            background-image: radial-gradient(ellipse at 50% 0%, rgba(255, 255, 255, 0.03) 0%, transparent 60%);
+            background-image: radial-gradient(ellipse at 50% 0%, rgba(255, 255, 255, 0.04) 0%, transparent 60%);
             color: var(--text-body);
             font-family: 'Plus Jakarta Sans', sans-serif;
             min-height: 100vh;
@@ -53,6 +53,11 @@
             letter-spacing: -0.03em;
         }
 
+        /* Light, readable text overrides for optimal contrast */
+        p, .text-muted, .text-secondary {
+            color: #CBD5E1 !important;
+        }
+
         /* Top Announcement Ticker Bar */
         .top-announcement-bar {
             background: #040507;
@@ -60,7 +65,7 @@
             font-size: 0.75rem;
             letter-spacing: 0.08em;
             text-transform: uppercase;
-            color: #94A3B8;
+            color: #CBD5E1;
             padding: 0.45rem 0;
         }
 
@@ -71,11 +76,11 @@
 
         /* Main Luxury Glass Navbar */
         .navbar-zenzee {
-            background: rgba(8, 9, 12, 0.92);
+            background: rgba(8, 9, 12, 0.94);
             backdrop-filter: blur(24px);
             -webkit-backdrop-filter: blur(24px);
             border-bottom: 1px solid var(--border-color);
-            padding: 0.9rem 0;
+            padding: 0.8rem 0;
             transition: all 0.3s ease;
         }
 
@@ -103,7 +108,7 @@
             font-weight: 600;
             letter-spacing: 0.06em;
             text-transform: uppercase;
-            color: #94A3B8 !important;
+            color: #CBD5E1 !important;
             padding: 0.5rem 1rem !important;
             transition: all 0.25s ease;
             position: relative;
@@ -136,8 +141,8 @@
 
         .search-pill:focus-within {
             border-color: #FFFFFF;
-            box-shadow: 0 0 15px rgba(255, 255, 255, 0.12);
-            background: #191D2B;
+            box-shadow: 0 0 15px rgba(255, 255, 255, 0.15);
+            background: #1A1E2C;
         }
 
         .search-pill input {
@@ -150,7 +155,7 @@
         }
 
         .search-pill input::placeholder {
-            color: #64748B;
+            color: #94A3B8;
         }
 
         /* Nav Icon Action Buttons */
@@ -173,7 +178,7 @@
             border-color: #FFFFFF;
             color: #FFFFFF;
             transform: translateY(-2px);
-            box-shadow: 0 4px 15px rgba(255, 255, 255, 0.1);
+            box-shadow: 0 4px 15px rgba(255, 255, 255, 0.15);
         }
 
         /* Buttons */
@@ -244,7 +249,7 @@
         }
 
         .product-card:hover {
-            border-color: rgba(255, 255, 255, 0.35);
+            border-color: rgba(255, 255, 255, 0.4);
             transform: translateY(-6px);
             box-shadow: 0 18px 40px rgba(0, 0, 0, 0.7);
         }
@@ -285,9 +290,9 @@
             position: absolute;
             top: 12px;
             right: 12px;
-            background: rgba(8, 9, 12, 0.85);
+            background: rgba(8, 9, 12, 0.88);
             backdrop-filter: blur(8px);
-            border: 1px solid rgba(255, 255, 255, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.25);
             color: #FFFFFF;
             font-weight: 700;
             font-size: 0.68rem;
@@ -304,6 +309,34 @@
             padding: 4rem 0 2rem;
         }
 
+        /* Mobile Responsiveness Media Queries */
+        @media (max-width: 768px) {
+            .navbar-zenzee {
+                padding: 0.6rem 0;
+            }
+            .brand-logo {
+                font-size: 1.45rem;
+            }
+            .search-pill {
+                width: 100%;
+                margin: 0.5rem 0;
+            }
+            .hero-glass-card {
+                padding: 1.75rem 1.25rem !important;
+            }
+            h1.display-4 {
+                font-size: clamp(1.8rem, 7vw, 2.5rem) !important;
+            }
+            .value-icon-box {
+                width: 44px;
+                height: 44px;
+                font-size: 1.25rem;
+            }
+            .product-card .p-4 {
+                padding: 1rem !important;
+            }
+        }
+
         /* Custom Scrollbar */
         ::-webkit-scrollbar {
             width: 8px;
@@ -312,7 +345,7 @@
             background: #08090C;
         }
         ::-webkit-scrollbar-thumb {
-            background: #242836;
+            background: #262A38;
             border-radius: 4px;
         }
         ::-webkit-scrollbar-thumb:hover {
@@ -327,13 +360,13 @@
     <div class="top-announcement-bar">
         <div class="container d-flex justify-content-between align-items-center">
             <div class="d-flex align-items-center gap-2">
-                <span class="badge bg-white text-dark font-heading fw-bold px-2 py-1 me-1">NEW SEASON</span>
-                <span>COMPLIMENTARY SHIPPING OVER <span class="white-highlight">₹1,499</span> | CODE: <span class="white-highlight">ZENZEEVIVA</span></span>
+                <span class="badge bg-white text-dark font-heading fw-bold px-2 py-1 me-1">NEW DROP</span>
+                <span>FREE EXPRESS SHIPPING OVER <span class="white-highlight">₹1,499</span> | CODE: <span class="white-highlight">ZENZEEVIVA</span></span>
             </div>
             <div class="d-none d-md-flex align-items-center gap-3">
                 <a href="{% url 'ai_stylist' %}" class="text-decoration-none white-highlight"><i class="bi bi-stars"></i> TRY AI OUTFIT STYLIST</a>
                 <span class="text-muted">|</span>
-                <span>GLOBAL SHIPPING</span>
+                <span>INDIA & GLOBAL</span>
             </div>
         </div>
     </div>
@@ -431,7 +464,7 @@
                     <a class="brand-logo mb-3 d-inline-block" href="{% url 'home' %}">
                         ZENZEE<span class="white-dot">.</span>
                     </a>
-                    <p class="text-muted small pe-lg-4 mb-3">
+                    <p class="text-muted small pe-lg-4 mb-3" style="color: #CBD5E1 !important;">
                         Redefining youth fashion and streetwear. Engineered with premium heavyweight fabrics, relaxed fits, and AI outfit recommendations for contemporary youth culture.
                     </p>
                     <div class="d-flex gap-2">
@@ -473,7 +506,7 @@
             <hr class="border-secondary mb-4 opacity-50">
 
             <div class="d-flex flex-column flex-md-row justify-content-between align-items-center small text-muted gap-2">
-                <p class="mb-0">&copy; 2026 ZENZEE Fashion Technologies. Designed for Viva & Contemporary Commerce.</p>
+                <p class="mb-0" style="color: #CBD5E1 !important;">&copy; 2026 ZENZEE Fashion Technologies. Designed for Viva & Contemporary Commerce.</p>
                 <div class="d-flex gap-3 fs-5">
                     <i class="bi bi-credit-card text-secondary" title="Razorpay / Cards"></i>
                     <i class="bi bi-qr-code text-secondary" title="UPI Payment"></i>
