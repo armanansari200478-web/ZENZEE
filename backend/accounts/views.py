@@ -10,7 +10,12 @@ def home_view(request):
     """
     Home page view for ZENZEE platform.
     """
-    return render(request, 'home.html')
+    from products.models import Product
+    featured_products = Product.objects.filter(is_featured=True)[:8]
+    if not featured_products.exists():
+        featured_products = Product.objects.all()[:8]
+    return render(request, 'home.html', {'featured_products': featured_products})
+
 
 
 def register_view(request):

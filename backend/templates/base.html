@@ -3,285 +3,487 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% block title %}ZENZEE — Good Fashion In Time{% endblock %}</title>
+    <title>{% block title %}ZENZEE — Contemporary High-Fashion & Youth Culture{% endblock %}</title>
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <!-- Bootstrap 5 CSS & Icons -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 
     <style>
         :root {
-            --zenzee-dark: #0B0D12;
-            --zenzee-card: #141721;
-            --zenzee-card-hover: #1D2230;
-            --zenzee-border: #262B3A;
-            --zenzee-primary: #FF2E63;
-            --zenzee-accent: #08D9D6;
-            --zenzee-gold: #FFB703;
-            --zenzee-text: #F4F6F8;
-            --zenzee-muted: #94A3B8;
+            --bg-main: #08090C;
+            --bg-surface: #12141C;
+            --bg-surface-hover: #191C28;
+            --border-color: #242836;
+            --border-hover: #3E4456;
+            
+            --brand-white: #FFFFFF;
+            --brand-light: #F1F5F9;
+            --brand-silver: #94A3B8;
+            --brand-muted: #64748B;
+            
+            --accent-red: #E63946;
+            --text-heading: #FFFFFF;
+            --text-body: #94A3B8;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
         }
 
         body {
-            background-color: var(--zenzee-dark);
-            color: var(--zenzee-text);
+            background-color: var(--bg-main);
+            background-image: radial-gradient(ellipse at 50% 0%, rgba(255, 255, 255, 0.03) 0%, transparent 60%);
+            color: var(--text-body);
             font-family: 'Plus Jakarta Sans', sans-serif;
             min-height: 100vh;
             display: flex;
             flex-direction: column;
+            overflow-x: hidden;
         }
 
-        h1, h2, h3, h4, h5, h6, .brand-font {
+        h1, h2, h3, h4, h5, h6, .font-heading {
             font-family: 'Outfit', sans-serif;
-            font-weight: 700;
-            letter-spacing: -0.5px;
+            color: var(--text-heading);
+            letter-spacing: -0.03em;
         }
 
-        /* Glassmorphism Navbar */
+        /* Top Announcement Ticker Bar */
+        .top-announcement-bar {
+            background: #040507;
+            border-bottom: 1px solid var(--border-color);
+            font-size: 0.75rem;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: #94A3B8;
+            padding: 0.45rem 0;
+        }
+
+        .top-announcement-bar .white-highlight {
+            color: #FFFFFF;
+            font-weight: 700;
+        }
+
+        /* Main Luxury Glass Navbar */
         .navbar-zenzee {
-            background: rgba(11, 13, 18, 0.88);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border-bottom: 1px solid var(--zenzee-border);
+            background: rgba(8, 9, 12, 0.92);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+            border-bottom: 1px solid var(--border-color);
             padding: 0.9rem 0;
+            transition: all 0.3s ease;
         }
 
         .brand-logo {
-            font-size: 1.9rem;
-            font-weight: 800;
-            letter-spacing: -1.5px;
-            background: linear-gradient(135deg, var(--zenzee-primary), var(--zenzee-accent));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.85rem;
+            font-weight: 900;
+            letter-spacing: 0.1em;
+            color: #FFFFFF !important;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
         }
 
-        .nav-link {
-            font-weight: 500;
-            color: #CBD5E1 !important;
-            transition: color 0.2s ease;
-            padding: 0.5rem 1rem !important;
+        .brand-logo span.white-dot {
+            color: #FFFFFF;
+            font-size: 2.2rem;
+            line-height: 0;
+            margin-left: 2px;
         }
 
-        .nav-link:hover, .nav-link.active {
-            color: #ffffff !important;
-        }
-
-        /* Primary Button */
-        .btn-zenzee-primary {
-            background: linear-gradient(135deg, #FF2E63 0%, #FF527B 100%);
-            color: #ffffff !important;
-            border: none;
+        .nav-link-zenzee {
+            font-family: 'Outfit', sans-serif;
+            font-size: 0.88rem;
             font-weight: 600;
-            padding: 0.65rem 1.4rem;
-            border-radius: 12px;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            box-shadow: 0 4px 20px rgba(255, 46, 99, 0.35);
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            color: #94A3B8 !important;
+            padding: 0.5rem 1rem !important;
+            transition: all 0.25s ease;
+            position: relative;
         }
 
-        .btn-zenzee-primary:hover {
+        .nav-link-zenzee:hover, .nav-link-zenzee.active {
+            color: #FFFFFF !important;
+        }
+
+        .nav-link-zenzee.active::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 1rem;
+            right: 1rem;
+            height: 2px;
+            background: #FFFFFF;
+            box-shadow: 0 0 8px rgba(255, 255, 255, 0.8);
+            border-radius: 2px;
+        }
+
+        /* Search Pill */
+        .search-pill {
+            background: #141722;
+            border: 1px solid var(--border-color);
+            border-radius: 50px;
+            padding: 0.25rem 0.5rem 0.25rem 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .search-pill:focus-within {
+            border-color: #FFFFFF;
+            box-shadow: 0 0 15px rgba(255, 255, 255, 0.12);
+            background: #191D2B;
+        }
+
+        .search-pill input {
+            background: transparent;
+            border: none;
+            color: #FFFFFF;
+            font-size: 0.85rem;
+            outline: none !important;
+            box-shadow: none !important;
+        }
+
+        .search-pill input::placeholder {
+            color: #64748B;
+        }
+
+        /* Nav Icon Action Buttons */
+        .nav-btn-icon {
+            width: 42px;
+            height: 42px;
+            border-radius: 12px;
+            background: var(--bg-surface);
+            border: 1px solid var(--border-color);
+            color: #FFFFFF;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            position: relative;
+            transition: all 0.25s ease;
+        }
+
+        .nav-btn-icon:hover {
+            border-color: #FFFFFF;
+            color: #FFFFFF;
             transform: translateY(-2px);
-            box-shadow: 0 8px 28px rgba(255, 46, 99, 0.55);
+            box-shadow: 0 4px 15px rgba(255, 255, 255, 0.1);
+        }
+
+        /* Buttons */
+        .btn-zenzee-gold, .btn-zenzee-primary {
+            background: #FFFFFF;
+            color: #000000 !important;
+            border: none;
+            font-weight: 700;
+            font-size: 0.85rem;
+            letter-spacing: 0.04em;
+            text-transform: uppercase;
+            padding: 0.65rem 1.4rem;
+            border-radius: 10px;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 4px 16px rgba(255, 255, 255, 0.15);
+        }
+
+        .btn-zenzee-gold:hover, .btn-zenzee-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(255, 255, 255, 0.3);
+            background: #F8FAFC;
+            color: #000000 !important;
         }
 
         .btn-zenzee-outline {
             background: transparent;
-            border: 1px solid var(--zenzee-border);
-            color: var(--zenzee-text) !important;
-            border-radius: 12px;
+            border: 1px solid var(--border-color);
+            color: #FFFFFF !important;
             font-weight: 600;
+            font-size: 0.85rem;
+            letter-spacing: 0.04em;
             padding: 0.65rem 1.4rem;
+            border-radius: 10px;
             transition: all 0.3s ease;
         }
 
         .btn-zenzee-outline:hover {
-            border-color: var(--zenzee-accent);
-            color: var(--zenzee-accent) !important;
-            background: rgba(8, 217, 214, 0.08);
+            border-color: #FFFFFF;
+            color: #000000 !important;
+            background: #FFFFFF;
+            transform: translateY(-2px);
         }
 
-        /* Card Styles */
+        /* Cards */
         .zenzee-card {
-            background: var(--zenzee-card);
-            border: 1px solid var(--zenzee-border);
-            border-radius: 20px;
-            transition: all 0.3s ease;
+            background: var(--bg-surface);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            overflow: hidden;
         }
 
+        .zenzee-card:hover {
+            border-color: var(--border-hover);
+            background: var(--bg-surface-hover);
+            transform: translateY(-4px);
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.5);
+        }
+
+        /* Product Card Specialization */
         .product-card {
-            background: var(--zenzee-card);
-            border: 1px solid var(--zenzee-border);
-            border-radius: 20px;
+            background: var(--bg-surface);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
             overflow: hidden;
-            transition: all 0.3s ease;
+            transition: all 0.35s ease;
+            position: relative;
         }
 
         .product-card:hover {
+            border-color: rgba(255, 255, 255, 0.35);
             transform: translateY(-6px);
-            background: var(--zenzee-card-hover);
-            border-color: rgba(255, 46, 99, 0.4);
-            box-shadow: 0 15px 35px rgba(0,0,0,0.6);
+            box-shadow: 0 18px 40px rgba(0, 0, 0, 0.7);
         }
 
-        .badge-sale {
-            background: rgba(255, 46, 99, 0.15);
-            color: var(--zenzee-primary);
-            border: 1px solid rgba(255, 46, 99, 0.3);
-            font-weight: 700;
-            border-radius: 8px;
+        .product-card .img-wrapper {
+            position: relative;
+            overflow: hidden;
+            aspect-ratio: 4/5;
+            background: #161A26;
+        }
+
+        .product-card .img-wrapper img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .product-card:hover .img-wrapper img {
+            transform: scale(1.08);
+        }
+
+        .badge-discount {
+            position: absolute;
+            top: 12px;
+            left: 12px;
+            background: var(--accent-red);
+            color: #FFFFFF;
+            font-weight: 800;
+            font-size: 0.7rem;
+            letter-spacing: 0.05em;
             padding: 0.35rem 0.65rem;
+            border-radius: 6px;
+            z-index: 2;
         }
 
-        /* Footer */
-        .footer-zenzee {
+        .badge-tag {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            background: rgba(8, 9, 12, 0.85);
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: #FFFFFF;
+            font-weight: 700;
+            font-size: 0.68rem;
+            padding: 0.3rem 0.6rem;
+            border-radius: 6px;
+            z-index: 2;
+        }
+
+        /* Footer Styling */
+        footer.footer-zenzee {
             margin-top: auto;
-            border-top: 1px solid var(--zenzee-border);
-            background: #07080C;
-            padding: 3rem 0 1.5rem;
+            background: #040507;
+            border-top: 1px solid var(--border-color);
+            padding: 4rem 0 2rem;
         }
 
-        .form-control, .form-select {
-            background-color: #0F121A;
-            border: 1px solid var(--zenzee-border);
-            color: #ffffff;
-            border-radius: 12px;
-            padding: 0.75rem 1rem;
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
         }
-
-        .form-control:focus, .form-select:focus {
-            background-color: #141824;
-            border-color: var(--zenzee-primary);
-            color: #ffffff;
-            box-shadow: 0 0 0 0.25rem rgba(255, 46, 99, 0.2);
+        ::-webkit-scrollbar-track {
+            background: #08090C;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #242836;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #FFFFFF;
         }
     </style>
     {% block extra_css %}{% endblock %}
 </head>
 <body>
 
-    <!-- Header / Navbar -->
+    <!-- Top Announcement Bar -->
+    <div class="top-announcement-bar">
+        <div class="container d-flex justify-content-between align-items-center">
+            <div class="d-flex align-items-center gap-2">
+                <span class="badge bg-white text-dark font-heading fw-bold px-2 py-1 me-1">NEW SEASON</span>
+                <span>COMPLIMENTARY SHIPPING OVER <span class="white-highlight">₹1,499</span> | CODE: <span class="white-highlight">ZENZEEVIVA</span></span>
+            </div>
+            <div class="d-none d-md-flex align-items-center gap-3">
+                <a href="{% url 'ai_stylist' %}" class="text-decoration-none white-highlight"><i class="bi bi-stars"></i> TRY AI OUTFIT STYLIST</a>
+                <span class="text-muted">|</span>
+                <span>GLOBAL SHIPPING</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Navigation Bar -->
     <nav class="navbar navbar-expand-lg navbar-dark navbar-zenzee sticky-top">
         <div class="container">
-            <a class="navbar-brand brand-logo d-flex align-items-center me-4" href="{% url 'home' %}">
-                ZENZEE
+            <a class="brand-logo me-4" href="{% url 'home' %}">
+                ZENZEE<span class="white-dot">.</span>
             </a>
-            <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#zenzeeNav">
+            
+            <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#mainNavbar">
                 <span class="navbar-toggler-icon"></span>
             </button>
-            <div class="collapse navbar-collapse" id="zenzeeNav">
-                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            
+            <div class="collapse navbar-collapse" id="mainNavbar">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0 gap-1">
                     <li class="nav-item">
-                        <a class="nav-link" href="{% url 'home' %}">Home</a>
+                        <a class="nav-link nav-link-zenzee {% if request.resolver_match.url_name == 'home' %}active{% endif %}" href="{% url 'home' %}">Home</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{% url 'product_list' %}">Shop All</a>
+                        <a class="nav-link nav-link-zenzee {% if request.resolver_match.url_name == 'product_list' %}active{% endif %}" href="{% url 'product_list' %}">Collections</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link text-info fw-semibold" href="{% url 'ai_stylist' %}">
-                            <i class="bi bi-stars text-info me-1"></i> AI Stylist
+                        <a class="nav-link nav-link-zenzee text-white {% if request.resolver_match.url_name == 'ai_stylist' %}active{% endif %}" href="{% url 'ai_stylist' %}">
+                            <i class="bi bi-stars text-white me-1"></i> AI Stylist
                         </a>
                     </li>
                 </ul>
 
-                <!-- Search Bar -->
+                <!-- Search Pill Input -->
                 <form class="d-flex me-3" action="{% url 'product_list' %}" method="GET">
-                    <div class="input-group">
-                        <input class="form-control form-control-sm border-secondary text-white bg-dark" type="search" name="q" placeholder="Search streetwear, hoodies..." aria-label="Search">
-                        <button class="btn btn-outline-secondary" type="submit"><i class="bi bi-search"></i></button>
+                    <div class="search-pill d-flex align-items-center">
+                        <i class="bi bi-search text-muted me-2"></i>
+                        <input type="search" name="q" placeholder="Search streetwear, hoodies..." aria-label="Search">
                     </div>
                 </form>
 
+                <!-- User Actions -->
                 <div class="d-flex align-items-center gap-2">
-                    <a href="{% url 'wishlist' %}" class="btn btn-zenzee-outline p-2 px-3 me-1 text-decoration-none" title="Wishlist">
-                        <i class="bi bi-heart text-danger"></i>
+                    <a href="{% url 'wishlist' %}" class="nav-btn-icon" title="Wishlist">
+                        <i class="bi bi-heart"></i>
                     </a>
-                    <a href="{% url 'cart_detail' %}" class="btn btn-zenzee-outline p-2 px-3 me-2 text-decoration-none" title="Shopping Cart">
-                        <i class="bi bi-bag-check text-info"></i>
+                    <a href="{% url 'cart_detail' %}" class="nav-btn-icon" title="Shopping Bag">
+                        <i class="bi bi-bag"></i>
                     </a>
 
                     {% if user.is_authenticated %}
                         <div class="dropdown">
-                            <button class="btn btn-zenzee-primary dropdown-toggle py-2 px-3" type="button" data-bs-toggle="dropdown">
-                                <i class="bi bi-person-circle me-1"></i> {{ user.username }}
+                            <button class="btn btn-zenzee-gold dropdown-toggle py-2 px-3 d-flex align-items-center gap-2" type="button" data-bs-toggle="dropdown">
+                                <i class="bi bi-person-fill"></i> {{ user.username }}
                             </button>
-                            <ul class="dropdown-menu dropdown-menu-dark dropdown-menu-end border-secondary shadow-lg">
-                                <li><a class="dropdown-item py-2" href="{% url 'profile' %}"><i class="bi bi-person me-2 text-info"></i> Profile</a></li>
-                                <li><a class="dropdown-item py-2" href="{% url 'order_history' %}"><i class="bi bi-box-seam me-2 text-warning"></i> My Orders</a></li>
+                            <ul class="dropdown-menu dropdown-menu-dark dropdown-menu-end border-secondary shadow-lg py-2 mt-2">
+                                <li><a class="dropdown-item py-2" href="{% url 'profile' %}"><i class="bi bi-person me-2 text-white"></i> My Profile</a></li>
+                                <li><a class="dropdown-item py-2" href="{% url 'order_history' %}"><i class="bi bi-box-seam me-2 text-white"></i> My Orders</a></li>
                                 {% if user.is_staff %}
                                     <li><hr class="dropdown-divider border-secondary"></li>
-                                    <li><a class="dropdown-item py-2 text-danger fw-semibold" href="{% url 'admin_dashboard' %}"><i class="bi bi-speedometer2 me-2"></i> Admin Panel</a></li>
+                                    <li><a class="dropdown-item py-2 text-danger fw-bold" href="{% url 'admin_dashboard' %}"><i class="bi bi-speedometer2 me-2"></i> Admin Dashboard</a></li>
                                 {% endif %}
                                 <li><hr class="dropdown-divider border-secondary"></li>
-                                <li><a class="dropdown-item py-2 text-muted" href="{% url 'logout' %}"><i class="bi bi-box-arrow-right me-2"></i> Logout</a></li>
+                                <li><a class="dropdown-item py-2 text-muted" href="{% url 'logout' %}"><i class="bi bi-box-arrow-right me-2"></i> Sign Out</a></li>
                             </ul>
                         </div>
                     {% else %}
-                        <a href="{% url 'login' %}" class="btn btn-zenzee-outline py-2 px-3 text-decoration-none">Log In</a>
-                        <a href="{% url 'register' %}" class="btn btn-zenzee-primary py-2 px-3 text-decoration-none">Sign Up</a>
+                        <a href="{% url 'login' %}" class="btn btn-zenzee-outline py-2 px-3 me-1">Log In</a>
+                        <a href="{% url 'register' %}" class="btn btn-zenzee-gold py-2 px-3">Join ZENZEE</a>
                     {% endif %}
                 </div>
             </div>
         </div>
     </nav>
 
-    <!-- Flash Messages -->
+    <!-- Flash Messages Container -->
     <div class="container mt-3">
         {% if messages %}
             {% for message in messages %}
-                <div class="alert alert-{{ message.tags }} alert-dismissible fade show bg-dark border-secondary text-light shadow-sm" role="alert">
-                    <i class="bi bi-info-circle-fill me-2 text-info"></i> {{ message }}
+                <div class="alert alert-{{ message.tags }} alert-dismissible fade show bg-dark border-secondary text-light shadow-lg rounded-3" role="alert">
+                    <i class="bi bi-info-circle-fill me-2 text-white"></i> {{ message }}
                     <button type="button" class="btn-close btn-close-white" data-bs-dismiss="alert"></button>
                 </div>
             {% endfor %}
         {% endif %}
     </div>
 
-    <!-- Main Content -->
-    <main class="py-4">
+    <!-- Main Dynamic Content -->
+    <main class="py-4 flex-grow-1">
         {% block content %}{% endblock %}
     </main>
 
     <!-- Footer -->
-    <footer class="footer-zenzee text-muted">
+    <footer class="footer-zenzee">
         <div class="container">
-            <div class="row g-4 mb-4 text-start">
-                <div class="col-lg-5">
-                    <h3 class="brand-logo mb-2">ZENZEE</h3>
-                    <p class="text-secondary small me-lg-4">
-                        Helping teenagers and young adults buy high-fashion clothing under budget without compromising quality. India's largest youth fashion platform vision.
+            <div class="row g-4 mb-5">
+                <div class="col-lg-4">
+                    <a class="brand-logo mb-3 d-inline-block" href="{% url 'home' %}">
+                        ZENZEE<span class="white-dot">.</span>
+                    </a>
+                    <p class="text-muted small pe-lg-4 mb-3">
+                        Redefining youth fashion and streetwear. Engineered with premium heavyweight fabrics, relaxed fits, and AI outfit recommendations for contemporary youth culture.
                     </p>
-                    <span class="badge bg-danger bg-opacity-25 text-danger px-3 py-2 rounded-pill border border-danger border-opacity-50">
-                        GOOD FASHION IN TIME
-                    </span>
+                    <div class="d-flex gap-2">
+                        <span class="badge bg-dark text-white border border-secondary px-3 py-2">
+                            <i class="bi bi-shield-check me-1"></i> 100% Authentic Streetwear Quality
+                        </span>
+                    </div>
                 </div>
-                <div class="col-6 col-lg-3">
-                    <h6 class="text-white mb-3">Categories</h6>
-                    <ul class="list-unstyled small text-secondary">
-                        <li class="mb-2"><a href="{% url 'product_list' %}?category=streetwear" class="text-reset text-decoration-none">Streetwear Collection</a></li>
-                        <li class="mb-2"><a href="{% url 'product_list' %}?category=oversized" class="text-reset text-decoration-none">Oversized Hoodies & Tees</a></li>
-                        <li class="mb-2"><a href="{% url 'product_list' %}?category=cargo-pants" class="text-reset text-decoration-none">Cargo & Utility Pants</a></li>
+
+                <div class="col-6 col-lg-2">
+                    <h6 class="font-heading text-white mb-3 text-uppercase">Shop</h6>
+                    <ul class="list-unstyled small d-flex flex-column gap-2 text-muted">
+                        <li><a href="{% url 'product_list' %}" class="text-reset text-decoration-none">All Collections</a></li>
+                        <li><a href="{% url 'product_list' %}?category=streetwear" class="text-reset text-decoration-none">Streetwear Tees</a></li>
+                        <li><a href="{% url 'product_list' %}?category=oversized" class="text-reset text-decoration-none">Heavyweight Hoodies</a></li>
+                        <li><a href="{% url 'product_list' %}?category=cargo-pants" class="text-reset text-decoration-none">Tactical Cargoes</a></li>
                     </ul>
                 </div>
-                <div class="col-6 col-lg-4">
-                    <h6 class="text-white mb-3">AI & Platform</h6>
-                    <ul class="list-unstyled small text-secondary">
-                        <li class="mb-2"><a href="{% url 'ai_stylist' %}" class="text-info text-decoration-none"><i class="bi bi-stars"></i> AI Fashion Assistant</a></li>
-                        <li class="mb-2"><a href="{% url 'order_history' %}" class="text-reset text-decoration-none">Order Tracking</a></li>
-                        <li class="mb-2"><a href="{% url 'profile' %}" class="text-reset text-decoration-none">User Profile Management</a></li>
+
+                <div class="col-6 col-lg-2">
+                    <h6 class="font-heading text-white mb-3 text-uppercase">Features</h6>
+                    <ul class="list-unstyled small d-flex flex-column gap-2 text-muted">
+                        <li><a href="{% url 'ai_stylist' %}" class="text-white text-decoration-none"><i class="bi bi-stars me-1"></i> AI Outfit Stylist</a></li>
+                        <li><a href="{% url 'wishlist' %}" class="text-reset text-decoration-none">Wishlist Saved</a></li>
+                        <li><a href="{% url 'order_history' %}" class="text-reset text-decoration-none">Order Tracking</a></li>
                     </ul>
+                </div>
+
+                <div class="col-lg-4">
+                    <h6 class="font-heading text-white mb-3 text-uppercase">Stay Connected</h6>
+                    <p class="text-muted small mb-3">Subscribe to receive exclusive drops, secret discount codes, and AI styling suggestions.</p>
+                    <div class="input-group">
+                        <input type="email" class="form-control bg-dark border-secondary text-white" placeholder="Enter your email address">
+                        <button class="btn btn-zenzee-gold" type="button">Subscribe</button>
+                    </div>
                 </div>
             </div>
-            <hr class="border-secondary my-4">
-            <div class="d-flex flex-column flex-md-row justify-content-between align-items-center small text-secondary">
-                <p class="mb-0">&copy; 2026 ZENZEE Fashion Technologies. Designed & Architected by Arman.</p>
-                <p class="mb-0 mt-2 mt-md-0">Inspired by Gen-Z • High Quality Streetwear</p>
+
+            <hr class="border-secondary mb-4 opacity-50">
+
+            <div class="d-flex flex-column flex-md-row justify-content-between align-items-center small text-muted gap-2">
+                <p class="mb-0">&copy; 2026 ZENZEE Fashion Technologies. Designed for Viva & Contemporary Commerce.</p>
+                <div class="d-flex gap-3 fs-5">
+                    <i class="bi bi-credit-card text-secondary" title="Razorpay / Cards"></i>
+                    <i class="bi bi-qr-code text-secondary" title="UPI Payment"></i>
+                    <i class="bi bi-shield-lock text-secondary" title="SSL Encrypted"></i>
+                </div>
             </div>
         </div>
     </footer>
 
-    <!-- Bootstrap 5 JS Bundle -->
+    <!-- Bootstrap 5 JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
     {% block extra_js %}{% endblock %}
 </body>

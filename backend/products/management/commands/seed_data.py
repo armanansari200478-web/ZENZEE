@@ -1,12 +1,21 @@
+import shutil
+from pathlib import Path
 from django.core.management.base import BaseCommand
-from products.models import Category, Brand, Size, Product, ProductSize
+from django.conf import settings
+from products.models import Category, Brand, Size, Product, ProductSize, ProductImage
 
 
 class Command(BaseCommand):
-    help = "Seeds initial ZENZEE youth fashion categories, brands, sizes, and products."
+    help = "Seeds initial ZENZEE youth fashion categories, brands, sizes, products, and attaches product images."
 
     def handle(self, *args, **options):
         self.stdout.write("Seeding ZENZEE platform data...")
+
+        # Destination media folder
+        media_products_dir = Path(settings.MEDIA_ROOT) / 'products'
+        media_products_dir.mkdir(parents=True, exist_ok=True)
+
+        assets_dir = settings.BASE_DIR / 'assets' / 'products images'
 
         # Categories
         cat_streetwear, _ = Category.objects.get_or_create(
@@ -39,7 +48,7 @@ class Command(BaseCommand):
             sz, _ = Size.objects.get_or_create(name=name, code=code)
             created_sizes.append(sz)
 
-        # Sample Products
+        # Sample Products with Image Mapping
         products_data = [
             {
                 'name': 'ZENZEE Cyberpunk Heavyweight Oversized Hoodie',
@@ -50,6 +59,7 @@ class Command(BaseCommand):
                 'discount_price': 1499.00,
                 'is_featured': True,
                 'is_trending': True,
+                'image_file': 'cyberpunk hoodie ZenZee.jpg',
             },
             {
                 'name': 'Tokyo Drift Graphic Oversized Acid Wash Tee',
@@ -60,6 +70,7 @@ class Command(BaseCommand):
                 'discount_price': 999.00,
                 'is_featured': True,
                 'is_trending': True,
+                'image_file': 'acid wash oversize t-shirt.webp',
             },
             {
                 'name': 'Tactical Multi-Pocket Cargo Utility Pants',
@@ -70,6 +81,7 @@ class Command(BaseCommand):
                 'discount_price': 1799.00,
                 'is_featured': True,
                 'is_trending': False,
+                'image_file': 'Cargo Pants baggy.jpg',
             },
             {
                 'name': 'Minimalist Monochrome Drop-Shoulder Sweatshirt',
@@ -80,6 +92,7 @@ class Command(BaseCommand):
                 'discount_price': 1299.00,
                 'is_featured': False,
                 'is_trending': True,
+                'image_file': 'Oversized monochrome drop shoulder t-shit.jpg',
             },
         ]
 
@@ -96,8 +109,23 @@ class Command(BaseCommand):
                     'is_trending': p_data['is_trending'],
                 }
             )
-            if created:
-                for sz in created_sizes:
-                    ProductSize.objects.get_or_create(product=product, size=sz, stock_quantity=25)
 
-        self.stdout.write(self.style.SUCCESS("Successfully seeded ZENZEE platform data!"))
+            for sz in created_sizes:
+                ProductSize.objects.get_or_create(product=product, size=sz, stock_quantity=25)
+
+            # Copy image to media and attach ProductImage
+            src_image_path = assets_dir / p_data['image_file']
+            if src_image_path.exists():
+                dest_image_name = p_data['image_file'].replace(' ', '_')
+                dest_image_path = media_products_dir / dest_image_name
+                shutil.copy(src_image_path, dest_image_path)
+                
+                # Check if ProductImage exists, otherwise create it
+                relative_image_path = f"products/{dest_image_name}"
+                ProductImage.objects.get_or_create(
+                    product=product,
+                    image=relative_image_path,
+                    defaults={'is_primary': True, 'alt_text': product.name}
+                )
+
+        self.stdout.write(self.style.SUCCESS("Successfully seeded ZENZEE platform data with product images!"))
