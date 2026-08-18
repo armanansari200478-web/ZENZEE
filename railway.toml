@@ -1,0 +1,11 @@
+[build]
+builder = "RAILPACK"
+buildCommand = "cd backend && python manage.py collectstatic --noinput"
+
+[deploy]
+preDeployCommand = "cd backend && python manage.py migrate --noinput"
+startCommand = "cd backend && gunicorn config.wsgi:application --bind 0.0.0.0:$PORT --workers 3 --log-file -"
+healthcheckPath = "/"
+healthcheckTimeout = 120
+restartPolicyType = "ON_FAILURE"
+restartPolicyMaxRetries = 10

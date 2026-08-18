@@ -39,16 +39,31 @@ SECRET_KEY = os.getenv('SECRET_KEY')
 if not SECRET_KEY:
     # Allow an unsafe fallback for local development only. In production
     # SECRET_KEY must be provided via environment variables.
-    if os.getenv('DEBUG', 'True') == 'True':
+    if os.getenv('DEBUG', 'True').strip().lower() in ('1', 'true', 'yes', 'on'):
         SECRET_KEY = 'unsafe-local-dev-key'
     else:
         raise ImproperlyConfigured('Missing SECRET_KEY environment variable')
 
 # When deploying set DEBUG=False in environment. Defaults to True for local dev.
-DEBUG = os.getenv('DEBUG', 'True') == 'True'
+DEBUG = os.getenv('DEBUG', 'True').strip().lower() in ('1', 'true', 'yes', 'on')
 
 # ALLOWED_HOSTS can be provided as a comma-separated env var
-ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS', '127.0.0.1,localhost').split(',')
+ALLOWED_HOSTS = [
+    host.strip()
+    for host in os.getenv('ALLOWED_HOSTS', '127.0.0.1,localhost').split(',')
+    if host.strip()
+]
+
+# Railway terminates HTTPS at its proxy. This setting prevents redirect loops
+# when secure production settings are enabled.
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+
+# Add your Railway and custom HTTPS domains through this environment variable.
+CSRF_TRUSTED_ORIGINS = [
+    origin.strip()
+    for origin in os.getenv('CSRF_TRUSTED_ORIGINS', '').split(',')
+    if origin.strip()
+]
 
 
 # Application definition
@@ -125,12 +140,13 @@ if DATABASE_URL:
         url = urlparse(DATABASE_URL)
         if url.scheme.startswith('postgres'):
             DATABASES['default'] = {
-                'ENGINE': 'django.db.backends.postgresql_psycopg2',
-                'NAME': url.path[1:],
-                'USER': url.username,
-                'PASSWORD': url.password,
-                'HOST': url.hostname,
-                'PORT': url.port or '',
+                'ENGINE': 'django.db.backends.postgresql',
+                'NAME': url.path[1:] if url.path else '',
+                'USER': url.username or '',
+                'PASSWORD': url.password or '',
+                'HOST': url.hostname or '',
+                'PORT': url.port or 5432,
+                'CONN_MAX_AGE': 600,
             }
 
 
@@ -189,4 +205,23 @@ STATICFILES_DIRS = [
     BASE_DIR / 'backend' / 'static',
 ]
 STATIC_ROOT = BASE_DIR / 'backend' / 'staticfiles'
+
+# Production Security Settings (enabled when DEBUG=False on Railway)
+if not DEBUG:
+    SECURE_SSL_REDIRECT = True
+    SESSION_COOKIE_SECURE = True
+    CSRF_COOKIE_SECURE = True
+    SECURE_HSTS_SECONDS = 31536000
+    SECURE_HSTS_INCLUDE_SUBDOMAINS = True
+    SECURE_HSTS_PRELOAD = True
+    SECURE_BROWSER_XSS_FILTER = True
+    X_FRAME_OPTIONS = 'DENY'
+
+# Razorpay Configuration
+RAZORPAY_KEY_ID = os.getenv('RAZORPAY_KEY_ID', '')
+RAZORPAY_KEY_SECRET = os.getenv('RAZORPAY_KEY_SECRET', '')
+
+# Optional: Stripe Configuration (if using Stripe)
+STRIPE_SECRET_KEY = os.getenv('STRIPE_SECRET_KEY', '')
+STRIPE_PUBLISHABLE_KEY = os.getenv('STRIPE_PUBLISHABLE_KEY', '')
 
