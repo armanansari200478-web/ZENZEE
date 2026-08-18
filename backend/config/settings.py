@@ -22,15 +22,16 @@ if not SECRET_KEY:
 DEBUG = os.getenv('DEBUG', 'True').strip().lower() in ('1', 'true', 'yes', 'on')
 
 # ALLOWED_HOSTS for Railway & Local
-raw_allowed_hosts = os.getenv('ALLOWED_HOSTS', '127.0.0.1,localhost,.railway.app,.up.railway.app')
+raw_allowed_hosts = os.getenv('ALLOWED_HOSTS', '*')
 ALLOWED_HOSTS = [host.strip() for host in raw_allowed_hosts.split(',') if host.strip()]
-if '*' in ALLOWED_HOSTS:
+if '*' in ALLOWED_HOSTS or os.getenv('RAILWAY_ENVIRONMENT'):
     ALLOWED_HOSTS = ['*']
 
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
 raw_csrf_origins = os.getenv('CSRF_TRUSTED_ORIGINS', 'http://127.0.0.1,http://localhost,https://*.railway.app,https://*.up.railway.app')
 CSRF_TRUSTED_ORIGINS = [origin.strip() for origin in raw_csrf_origins.split(',') if origin.strip()]
+
 
 # Application definition
 INSTALLED_APPS = [
@@ -153,16 +154,15 @@ STATICFILES_DIRS = [
 STATIC_ROOT = BASE_DIR / 'backend' / 'staticfiles'
 
 # Production Security Settings (enabled when DEBUG=False)
+# Note: Railway terminates SSL at its edge proxy. Disabling container-level SSL redirect
+# ensures internal HTTP healthchecks (/health/) pass with 200 OK instead of 301 redirects.
 if not DEBUG:
-    SECURE_SSL_REDIRECT = True
-    SECURE_REDIRECT_EXEMPT = [r'^health/$']
+    SECURE_SSL_REDIRECT = False
     SESSION_COOKIE_SECURE = True
     CSRF_COOKIE_SECURE = True
-    SECURE_HSTS_SECONDS = 31536000
-    SECURE_HSTS_INCLUDE_SUBDOMAINS = True
-    SECURE_HSTS_PRELOAD = True
     SECURE_BROWSER_XSS_FILTER = True
     X_FRAME_OPTIONS = 'DENY'
+
 
 # Razorpay Configuration
 RAZORPAY_KEY_ID = os.getenv('RAZORPAY_KEY_ID', '')
