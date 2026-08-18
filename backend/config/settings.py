@@ -209,6 +209,9 @@ STATIC_ROOT = BASE_DIR / 'backend' / 'staticfiles'
 # Production Security Settings (enabled when DEBUG=False on Railway)
 if not DEBUG:
     SECURE_SSL_REDIRECT = True
+    # Railway's internal health check is HTTP. Keep this endpoint available
+    # so Railway can verify the service without an HTTPS redirect.
+    SECURE_REDIRECT_EXEMPT = [r'^health/$']
     SESSION_COOKIE_SECURE = True
     CSRF_COOKIE_SECURE = True
     SECURE_HSTS_SECONDS = 31536000
