@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load static %}
 
 {% block title %}ZENZEE — Ultra-Premium Youth Streetwear & Contemporary Fashion{% endblock %}
 
@@ -7,43 +8,97 @@
     /* Hero Banner */
     .hero-banner-section {
         position: relative;
-        background: linear-gradient(180deg, rgba(8, 9, 12, 0.45) 0%, rgba(8, 9, 12, 0.95) 100%),
-                    url('https://images.unsplash.com/photo-1509631179647-0177331693ae?auto=format&fit=crop&w=1920&q=80') center/cover no-repeat;
+        background: linear-gradient(135deg, rgba(12, 10, 8, 0.68) 0%, rgba(12, 10, 8, 0.88) 100%),
+        url('{% static "images/products/cyberpunk-hoodie.jpg" %}') center/cover no-repeat;
         min-height: 550px;
-        border-radius: 24px;
-        border: 1px solid var(--border-color);
+        border-radius: 26px;
+        border: 1px solid rgba(214, 178, 129, 0.25);
         overflow: hidden;
         display: flex;
         align-items: center;
+        box-shadow: 0 24px 60px rgba(0, 0, 0, 0.35);
     }
 
     .hero-glass-card {
-        background: rgba(18, 20, 28, 0.85);
-        backdrop-filter: blur(24px);
-        border: 1px solid rgba(255, 255, 255, 0.25);
-        border-radius: 20px;
+        background: rgba(18, 18, 18, 0.78);
+        backdrop-filter: blur(18px);
+        border: 1px solid rgba(214, 178, 129, 0.28);
+        border-radius: 22px;
         padding: 3rem 2.5rem;
         max-width: 650px;
+        box-shadow: 0 16px 40px rgba(0, 0, 0, 0.18);
     }
 
-    /* Clean Category Showcase Cards (No text overlapping on top of image) */
+    .hero-glass-card .badge {
+        background: rgba(255, 255, 255, 0.92) !important;
+        color: #111111 !important;
+        border: 1px solid rgba(255, 255, 255, 0.4);
+    }
+
+    .btn-zenzee-primary {
+        background: linear-gradient(135deg, #f3e9dc 0%, #d9b88c 100%);
+        color: #111111 !important;
+        border: 1px solid rgba(217, 184, 140, 0.8);
+        box-shadow: 0 12px 28px rgba(217, 184, 140, 0.18);
+    }
+
+    .btn-zenzee-primary:hover {
+        background: linear-gradient(135deg, #f8efe6 0%, #e2c39d 100%);
+        color: #111111 !important;
+    }
+
+    @media (max-width: 576px) {
+        .hero-banner-section {
+            min-height: 0;
+            border-radius: 18px;
+            padding: 1rem !important;
+            background-position: 62% center;
+        }
+
+        .hero-glass-card {
+            border-radius: 16px;
+        }
+
+        .hero-glass-card .d-flex.gap-3>a {
+            width: 100%;
+            text-align: center;
+        }
+
+        .cat-showcase-card .cat-img-wrapper {
+            height: 180px;
+        }
+
+        .section-heading-row {
+            align-items: flex-start !important;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+
+        .section-heading-row .btn {
+            width: 100%;
+        }
+    }
+
     .cat-showcase-card {
-        background: var(--bg-surface);
-        border: 1px solid var(--border-color);
+        background: #12151d;
+        border: 1px solid rgba(214, 178, 129, 0.18);
         border-radius: 18px;
         overflow: hidden;
         transition: all 0.35s ease;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
     }
 
     .cat-showcase-card:hover {
-        border-color: rgba(255, 255, 255, 0.35);
+        border-color: rgba(214, 178, 129, 0.4);
         transform: translateY(-6px);
-        box-shadow: 0 16px 36px rgba(0, 0, 0, 0.6);
+        box-shadow: 0 18px 38px rgba(0, 0, 0, 0.52);
     }
 
     .cat-showcase-card .cat-img-wrapper {
         position: relative;
-        height: 220px;
+        height: 260px;
         overflow: hidden;
         background: #141722;
     }
@@ -56,21 +111,22 @@
     }
 
     .cat-showcase-card:hover .cat-img-wrapper img {
-        transform: scale(1.08);
+        transform: scale(1.07);
     }
 
     .cat-content-body {
-        padding: 1.5rem;
-        background: var(--bg-surface);
+        padding: 1.35rem 1.35rem 1.5rem;
+        background: #12151d;
+        flex: 1;
     }
 
     .value-icon-box {
         width: 56px;
         height: 56px;
         border-radius: 14px;
-        background: var(--bg-surface);
-        border: 1px solid var(--border-color);
-        color: #FFFFFF;
+        background: rgba(214, 178, 129, 0.1);
+        border: 1px solid rgba(214, 178, 129, 0.22);
+        color: #F5E9D8;
         display: flex;
         align-items: center;
         justify-content: center;
@@ -80,10 +136,10 @@
     }
 
     .value-card:hover .value-icon-box {
-        background: #FFFFFF;
-        color: #000000;
+        background: rgba(214, 178, 129, 0.18);
+        color: #FFFFFF;
         transform: translateY(-4px);
-        box-shadow: 0 8px 20px rgba(255, 255, 255, 0.2);
+        box-shadow: 0 8px 20px rgba(214, 178, 129, 0.14);
     }
 </style>
 {% endblock %}
@@ -99,15 +155,16 @@
                 </span>
                 <span class="text-white-50 small font-monospace">STREETWEAR COLLECTION</span>
             </div>
-            
+
             <h1 class="display-4 fw-extrabold text-white mb-3" style="line-height: 1.05;">
                 REDEFINING <span class="text-white">YOUTH FASHION.</span>
             </h1>
-            
+
             <p class="text-light opacity-75 mb-4 leading-relaxed fs-6">
-                Premium heavyweight streetwear engineered for high fashion & comfort under budget. Bio-washed cotton, relaxed drop shoulders, and tactical fits.
+                Premium heavyweight streetwear engineered for high fashion & comfort under budget. Bio-washed cotton,
+                relaxed drop shoulders, and tactical fits.
             </p>
-            
+
             <div class="d-flex flex-wrap gap-3">
                 <a href="{% url 'product_list' %}" class="btn btn-zenzee-primary py-3 px-4">
                     Explore Collection <i class="bi bi-arrow-right ms-2"></i>
@@ -146,8 +203,9 @@
                 <div class="value-icon-box">
                     <i class="bi bi-shield-check"></i>
                 </div>
-                <h6 class="font-heading text-white mb-1">Razorpay Verified Payment</h6>
-                <p class="text-muted small mb-0">100% encrypted checkout via Cards, UPI, Netbanking & Wallets.</p>
+                <h6 class="font-heading text-white mb-1">Razorpay Test Checkout</h6>
+                <p class="text-muted small mb-0">Demo checkout is enabled for local testing and viva presentation with
+                    no live payment charges.</p>
             </div>
         </div>
 
@@ -156,8 +214,9 @@
                 <div class="value-icon-box">
                     <i class="bi bi-arrow-counterclockwise"></i>
                 </div>
-                <h6 class="font-heading text-white mb-1">Hassle-Free Exchanges</h6>
-                <p class="text-muted small mb-0">7-day easy size exchange and doorstep pickup service.</p>
+                <h6 class="font-heading text-white mb-1">Order Tracking</h6>
+                <p class="text-muted small mb-0">Order lifecycle is shown clearly for pending, shipped, and delivered
+                    status tracking.</p>
             </div>
         </div>
     </div>
@@ -169,15 +228,16 @@
                 <span class="text-white font-monospace small text-uppercase">CURATED COLLECTIONS</span>
                 <h2 class="h2 text-white font-heading fw-bold mb-0">Shop By Category</h2>
             </div>
-            <a href="{% url 'product_list' %}" class="btn btn-zenzee-outline py-2 px-3 fs-6">View All <i class="bi bi-chevron-right ms-1"></i></a>
+            <a href="{% url 'product_list' %}" class="btn btn-zenzee-outline py-2 px-3 fs-6">View All <i
+                    class="bi bi-chevron-right ms-1"></i></a>
         </div>
 
-        <div class="row g-4">
+        <div class="row g-4 align-items-stretch">
             <div class="col-md-4">
-                <a href="{% url 'product_list' %}?category=oversized" class="text-decoration-none">
-                    <div class="cat-showcase-card">
+                <a href="{% url 'product_list' %}?category=oversized" class="text-decoration-none d-block h-100">
+                    <div class="cat-showcase-card h-100">
                         <div class="cat-img-wrapper">
-                            <img src="https://images.unsplash.com/photo-1556905055-8f358a7a47b2?auto=format&fit=crop&w=800&q=80" alt="Oversized Hoodies">
+                            <img src="{% static 'images/products/cyberpunk-hoodie.jpg' %}" alt="Oversized Hoodies">
                         </div>
                         <div class="cat-content-body text-start">
                             <span class="badge bg-white text-dark mb-2 px-2 py-1">BESTSELLER</span>
@@ -189,13 +249,13 @@
             </div>
 
             <div class="col-md-4">
-                <a href="{% url 'product_list' %}?category=streetwear" class="text-decoration-none">
-                    <div class="cat-showcase-card">
+                <a href="{% url 'product_list' %}?category=streetwear" class="text-decoration-none d-block h-100">
+                    <div class="cat-showcase-card h-100">
                         <div class="cat-img-wrapper">
-                            <img src="https://images.unsplash.com/photo-1521572267360-ee0c2909d518?auto=format&fit=crop&w=800&q=80" alt="Streetwear Tees">
+                            <img src="{% static 'images/products/acid-wash-tee.webp' %}" alt="Streetwear Tees">
                         </div>
                         <div class="cat-content-body text-start">
-                            <span class="badge bg-danger text-white mb-2 px-2 py-1">NEW DROP</span>
+                            <span class="badge bg-warning text-dark mb-2 px-2 py-1">NEW DROP</span>
                             <h4 class="font-heading text-white mb-1">Graphic Tees</h4>
                             <p class="text-muted small mb-0">240 GSM Puff Printed Cotton</p>
                         </div>
@@ -204,13 +264,13 @@
             </div>
 
             <div class="col-md-4">
-                <a href="{% url 'product_list' %}?category=cargo-pants" class="text-decoration-none">
-                    <div class="cat-showcase-card">
+                <a href="{% url 'product_list' %}?category=cargo-pants" class="text-decoration-none d-block h-100">
+                    <div class="cat-showcase-card h-100">
                         <div class="cat-img-wrapper">
-                            <img src="https://images.unsplash.com/photo-1517445312882-bc9910d016b7?auto=format&fit=crop&w=800&q=80" alt="Cargo Pants">
+                            <img src="{% static 'images/products/cargo-pants.jpg' %}" alt="Cargo Pants">
                         </div>
                         <div class="cat-content-body text-start">
-                            <span class="badge bg-white text-dark mb-2 px-2 py-1">TACTICAL</span>
+                            <span class="badge bg-light text-dark mb-2 px-2 py-1">TACTICAL</span>
                             <h4 class="font-heading text-white mb-1">Utility Cargoes</h4>
                             <p class="text-muted small mb-0">Multi-pocket Ripstop Fit</p>
                         </div>
@@ -220,81 +280,90 @@
         </div>
     </div>
 
-    <!-- Featured Products Section -->
-    <div class="mb-5">
-        <div class="d-flex justify-content-between align-items-end mb-4">
-            <div>
-                <span class="text-white font-monospace small text-uppercase">TRENDING APPAREL</span>
-                <h2 class="h2 text-white font-heading fw-bold mb-0">Featured Drops</h2>
-            </div>
-            <a href="{% url 'product_list' %}" class="btn btn-zenzee-outline py-2 px-3 fs-6">Explore Catalog <i class="bi bi-chevron-right ms-1"></i></a>
+<!-- Featured Products Section -->
+<div class="mb-5">
+    <div class="d-flex justify-content-between align-items-end mb-4">
+        <div>
+            <span class="text-white font-monospace small text-uppercase">TRENDING APPAREL</span>
+            <h2 class="h2 text-white font-heading fw-bold mb-0">Featured Drops</h2>
         </div>
+        <a href="{% url 'product_list' %}" class="btn btn-zenzee-outline py-2 px-3 fs-6">Explore Catalog <i
+                class="bi bi-chevron-right ms-1"></i></a>
+    </div>
 
-        <div class="row row-cols-1 row-cols-md-2 row-cols-lg-4 g-4">
-            {% for product in featured_products %}
-                <div class="col">
-                    <div class="product-card h-100 d-flex flex-column">
-                        <div class="img-wrapper">
-                            {% if product.images.first %}
-                                <img src="{{ product.images.first.image.url }}" alt="{{ product.name }}">
-                            {% else %}
-                                <img src="https://images.unsplash.com/photo-1509631179647-0177331693ae?auto=format&fit=crop&w=600&q=80" alt="{{ product.name }}">
+    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-4 g-4">
+        {% for product in featured_products %}
+        <div class="col">
+            <div class="product-card h-100 d-flex flex-column">
+                <div class="img-wrapper">
+                    {% if product.images.first %}
+                    <img src="{{ product.images.first.image.url }}" alt="{{ product.name }}"
+                        onerror="this.onerror=null;this.src='{% static 'images/products/cyberpunk-hoodie.jpg' %}';">
+                    {% else %}
+                    <img src="{% static 'images/products/cyberpunk-hoodie.jpg' %}" alt="{{ product.name }}">
+                    {% endif %}
+
+                    {% if product.get_discount_percentage > 0 %}
+                    <span class="badge-discount">{{ product.get_discount_percentage }}% OFF</span>
+                    {% endif %}
+
+                    <span class="badge-tag">{{ product.category.name|upper }}</span>
+                </div>
+
+                <div class="p-4 d-flex flex-column flex-grow-1">
+                    <span class="text-muted font-monospace small mb-1">{{ product.brand.name }}</span>
+                    <h5 class="font-heading text-white fs-6 mb-2">
+                        <a href="{% url 'product_detail' product.slug %}"
+                            class="text-white text-decoration-none hover-white">{{ product.name }}</a>
+                    </h5>
+
+                    <div
+                        class="mt-auto pt-3 border-top border-secondary border-opacity-50 d-flex align-items-center justify-content-between">
+                        <div>
+                            <span class="fs-5 fw-extrabold text-white">₹{{ product.get_effective_price }}</span>
+                            {% if product.discount_price %}
+                            <small class="text-muted text-decoration-line-through ms-1">₹{{ product.price }}</small>
+                            <small class="text-danger ms-1">SAVE ₹{{ product.get_discount_amount }}</small>
                             {% endif %}
-                            
-                            {% if product.get_discount_percentage > 0 %}
-                                <span class="badge-discount">{{ product.get_discount_percentage }}% OFF</span>
-                            {% endif %}
-                            
-                            <span class="badge-tag">{{ product.category.name|upper }}</span>
                         </div>
-
-                        <div class="p-4 d-flex flex-column flex-grow-1">
-                            <span class="text-muted font-monospace small mb-1">{{ product.brand.name }}</span>
-                            <h5 class="font-heading text-white fs-6 mb-2">
-                                <a href="{% url 'product_detail' product.slug %}" class="text-white text-decoration-none hover-white">{{ product.name }}</a>
-                            </h5>
-
-                            <div class="mt-auto pt-3 border-top border-secondary border-opacity-50 d-flex align-items-center justify-content-between">
-                                <div>
-                                    <span class="fs-5 fw-extrabold text-white">₹{{ product.get_effective_price }}</span>
-                                    {% if product.discount_price %}
-                                        <small class="text-muted text-decoration-line-through ms-1">₹{{ product.price }}</small>
-                                    {% endif %}
-                                </div>
-                                <div class="d-flex gap-2">
-                                    <a href="{% url 'wishlist_toggle' product.id %}" class="btn btn-sm btn-outline-secondary rounded-circle" title="Add to Wishlist">
-                                        <i class="bi bi-heart text-danger"></i>
-                                    </a>
-                                    <a href="{% url 'product_detail' product.slug %}" class="btn btn-zenzee-primary btn-sm px-3">
-                                        View
-                                    </a>
-                                </div>
-                            </div>
+                        <div class="d-flex gap-2">
+                            <a href="{% url 'wishlist_toggle' product.id %}"
+                                class="btn btn-sm btn-outline-secondary rounded-circle" title="Add to Wishlist">
+                                <i class="bi bi-heart text-danger"></i>
+                            </a>
+                            <a href="{% url 'product_detail' product.slug %}"
+                                class="btn btn-zenzee-primary btn-sm px-3">
+                                View
+                            </a>
                         </div>
                     </div>
                 </div>
-            {% empty %}
-                <div class="col-12 text-center py-5">
-                    <p class="text-muted">No featured products available right now.</p>
-                </div>
-            {% endfor %}
+            </div>
         </div>
+        {% empty %}
+        <div class="col-12 text-center py-5">
+            <p class="text-muted">No featured products available right now.</p>
+        </div>
+        {% endfor %}
     </div>
+</div>
 
-    <!-- AI Stylist Banner Section -->
-    <div class="zenzee-card p-5 my-5 text-center position-relative overflow-hidden" style="background: linear-gradient(135deg, rgba(255, 255, 255, 0.06) 0%, rgba(255, 255, 255, 0.02) 100%); border-color: rgba(255, 255, 255, 0.2);">
-        <div class="mx-auto" style="max-width: 700px;">
-            <span class="badge bg-white text-dark font-heading px-3 py-2 rounded-pill mb-3">
-                <i class="bi bi-stars me-1"></i> AI-POWERED PERSONAL STYLIST
-            </span>
-            <h2 class="display-6 font-heading fw-bold text-white mb-3">Confused About What Suits Your Fit?</h2>
-            <p class="text-light opacity-75 mb-4 leading-relaxed fs-6">
-                Tell our AI assistant your event, vibe, or budget, and get instant outfit combinations paired directly from ZENZEE's inventory.
-            </p>
-            <a href="{% url 'ai_stylist' %}" class="btn btn-zenzee-primary py-3 px-4 fs-6">
-                Launch AI Outfit Stylist <i class="bi bi-chat-left-dots-fill ms-2"></i>
-            </a>
-        </div>
+<!-- AI Stylist Banner Section -->
+<div class="zenzee-card p-5 my-5 text-center position-relative overflow-hidden"
+    style="background: linear-gradient(135deg, rgba(255, 255, 255, 0.06) 0%, rgba(255, 255, 255, 0.02) 100%); border-color: rgba(255, 255, 255, 0.2);">
+    <div class="mx-auto" style="max-width: 700px;">
+        <span class="badge bg-white text-dark font-heading px-3 py-2 rounded-pill mb-3">
+            <i class="bi bi-stars me-1"></i> AI-POWERED PERSONAL STYLIST
+        </span>
+        <h2 class="display-6 font-heading fw-bold text-white mb-3">Confused About What Suits Your Fit?</h2>
+        <p class="text-light opacity-75 mb-4 leading-relaxed fs-6">
+            Tell our AI assistant your event, vibe, or budget, and get instant outfit combinations paired directly from
+            ZENZEE's inventory.
+        </p>
+        <a href="{% url 'ai_stylist' %}" class="btn btn-zenzee-primary py-3 px-4 fs-6">
+            Launch AI Outfit Stylist <i class="bi bi-chat-left-dots-fill ms-2"></i>
+        </a>
     </div>
+</div>
 </div>
 {% endblock %}

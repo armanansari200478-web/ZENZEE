@@ -10,9 +10,6 @@ from django.views.static import serve
 from accounts import views as account_views
 
 urlpatterns = [
-    path('health', lambda request: HttpResponse('ok')),
-    path('health/', lambda request: HttpResponse('ok'), name='health'),
-
     path('admin/', admin.site.urls),
     path('', account_views.home_view, name='home'),
     path('accounts/', include('accounts.urls')),

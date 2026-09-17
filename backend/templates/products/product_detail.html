@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load static %}
 
 {% block title %}{{ product.name }} — ZENZEE High Fashion{% endblock %}
 
@@ -8,7 +9,8 @@
     <nav aria-label="breadcrumb" class="mb-4">
         <ol class="breadcrumb small text-uppercase font-monospace" style="letter-spacing: 0.05em;">
             <li class="breadcrumb-item"><a href="{% url 'home' %}" class="text-muted text-decoration-none">Home</a></li>
-            <li class="breadcrumb-item"><a href="{% url 'product_list' %}" class="text-muted text-decoration-none">Collections</a></li>
+            <li class="breadcrumb-item"><a href="{% url 'product_list' %}"
+                    class="text-muted text-decoration-none">Collections</a></li>
             <li class="breadcrumb-item active text-white" aria-current="page">{{ product.name }}</li>
         </ol>
     </nav>
@@ -16,15 +18,19 @@
     <div class="row g-5 mb-5">
         <!-- Main Product Image Gallery -->
         <div class="col-lg-6">
-            <div class="zenzee-card p-3 position-relative overflow-hidden shadow-lg" style="border-color: rgba(255, 255, 255, 0.2);">
+            <div class="zenzee-card p-3 position-relative overflow-hidden shadow-lg"
+                style="border-color: rgba(255, 255, 255, 0.2);">
                 {% if product.images.first %}
-                    <img src="{{ product.images.first.image.url }}" alt="{{ product.name }}" class="w-100 rounded-3" style="max-height: 520px; object-fit: cover;">
+                <img src="{{ product.images.first.image.url }}" alt="{{ product.name }}" class="w-100 rounded-3"
+                    style="max-height: 520px; object-fit: cover;"
+                    onerror="this.onerror=null;this.src='{% static 'images/products/cyberpunk-hoodie.jpg' %}';">
                 {% else %}
-                    <img src="https://images.unsplash.com/photo-1509631179647-0177331693ae?auto=format&fit=crop&w=800&q=80" alt="{{ product.name }}" class="w-100 rounded-3" style="max-height: 520px; object-fit: cover;">
+                <img src="{% static 'images/products/cyberpunk-hoodie.jpg' %}" alt="{{ product.name }}"
+                    class="w-100 rounded-3" style="max-height: 520px; object-fit: cover;">
                 {% endif %}
-                
+
                 {% if product.get_discount_percentage > 0 %}
-                    <span class="badge-discount">{{ product.get_discount_percentage }}% OFF</span>
+                <span class="badge-discount">{{ product.get_discount_percentage }}% OFF</span>
                 {% endif %}
             </div>
         </div>
@@ -32,8 +38,10 @@
         <!-- Product Specs & Action Form -->
         <div class="col-lg-6">
             <div class="d-flex align-items-center gap-2 mb-2">
-                <span class="badge bg-white text-dark font-heading px-3 py-1 text-uppercase">{{ product.category.name }}</span>
-                <span class="text-muted small font-monospace">BRAND: {{ product.brand.name|default:"ZENZEE STUDIO" }}</span>
+                <span class="badge bg-white text-dark font-heading px-3 py-1 text-uppercase">{{ product.category.name
+                    }}</span>
+                <span class="text-muted small font-monospace">BRAND: {{ product.brand.name|default:"ZENZEE STUDIO"
+                    }}</span>
             </div>
 
             <h1 class="display-6 font-heading fw-extrabold text-white mb-3">{{ product.name }}</h1>
@@ -41,8 +49,8 @@
             <div class="d-flex align-items-baseline gap-3 mb-4 pb-3 border-bottom border-secondary border-opacity-50">
                 <span class="display-5 font-heading fw-bold text-white">₹{{ product.get_effective_price }}</span>
                 {% if product.discount_price %}
-                    <span class="fs-4 text-muted text-decoration-line-through">₹{{ product.price }}</span>
-                    <span class="badge bg-danger text-white px-2 py-1 fs-6">SAVE ₹{{ product.price|add:"-product.discount_price" }}</span>
+                <span class="fs-4 text-muted text-decoration-line-through">₹{{ product.price }}</span>
+                <span class="badge bg-danger text-white px-2 py-1 fs-6">SAVE ₹{{ product.get_discount_amount }}</span>
                 {% endif %}
             </div>
 
@@ -53,22 +61,25 @@
 
                 <!-- Size Selector -->
                 {% if product.product_sizes.all %}
-                    <div class="mb-4">
-                        <div class="d-flex justify-content-between align-items-center mb-2">
-                            <label class="form-label font-heading text-white fw-bold mb-0 text-uppercase">Select Size</label>
-                            <span class="text-muted small" style="cursor: pointer;"><i class="bi bi-ruler me-1"></i> Size Guide</span>
-                        </div>
-                        <div class="d-flex flex-wrap gap-2">
-                            {% for ps in product.product_sizes.all %}
-                                <div class="form-check p-0">
-                                    <input type="radio" class="btn-check" name="size_id" id="size_{{ ps.size.id }}" value="{{ ps.size.id }}" {% if forloop.first %}checked{% endif %}>
-                                    <label class="btn btn-zenzee-outline px-4 py-2 text-white" for="size_{{ ps.size.id }}">
-                                        {{ ps.size.code }} (Stock: {{ ps.stock_quantity }})
-                                    </label>
-                                </div>
-                            {% endfor %}
-                        </div>
+                <div class="mb-4">
+                    <div class="d-flex justify-content-between align-items-center mb-2">
+                        <label class="form-label font-heading text-white fw-bold mb-0 text-uppercase">Select
+                            Size</label>
+                        <span class="text-muted small" style="cursor: pointer;"><i class="bi bi-ruler me-1"></i> Size
+                            Guide</span>
                     </div>
+                    <div class="d-flex flex-wrap gap-2">
+                        {% for ps in product.product_sizes.all %}
+                        <div class="form-check p-0">
+                            <input type="radio" class="btn-check" name="size_id" id="size_{{ ps.size.id }}"
+                                value="{{ ps.size.id }}" {% if forloop.first %}checked{% endif %}>
+                            <label class="btn btn-zenzee-outline px-4 py-2 text-white" for="size_{{ ps.size.id }}">
+                                {{ ps.size.code }} (Stock: {{ ps.stock_quantity }})
+                            </label>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
                 {% endif %}
 
                 <!-- Action Buttons -->
@@ -76,7 +87,9 @@
                     <button type="submit" class="btn btn-zenzee-primary flex-grow-1 py-3 fs-6">
                         Add To Bag <i class="bi bi-bag-plus ms-2"></i>
                     </button>
-                    <a href="{% url 'wishlist_toggle' product.id %}" class="btn btn-zenzee-outline px-4 d-flex align-items-center justify-content-center" title="Save to Wishlist">
+                    <a href="{% url 'wishlist_toggle' product.id %}"
+                        class="btn btn-zenzee-outline px-4 d-flex align-items-center justify-content-center"
+                        title="Save to Wishlist">
                         <i class="bi bi-heart text-danger fs-5"></i>
                     </a>
                 </div>
@@ -86,15 +99,15 @@
             <div class="zenzee-card p-3 text-muted small d-flex flex-column gap-2">
                 <div class="d-flex align-items-center gap-2">
                     <i class="bi bi-truck text-white fs-5"></i>
-                    <span>Free express doorstep dispatch within 24-48 hours.</span>
+                    <span>Order dispatch flow and checkout status are ready for demo presentation.</span>
                 </div>
                 <div class="d-flex align-items-center gap-2">
                     <i class="bi bi-shield-check text-white fs-5"></i>
-                    <span>Razorpay SSL 256-bit encrypted checkout guarantee.</span>
+                    <span>Razorpay test-mode checkout is enabled for local and viva demo use.</span>
                 </div>
                 <div class="d-flex align-items-center gap-2">
                     <i class="bi bi-arrow-counterclockwise text-white fs-5"></i>
-                    <span>7-Day easy exchange on all sizing issues.</span>
+                    <span>Order tracking details are displayed clearly for customer-facing flow.</span>
                 </div>
             </div>
         </div>
@@ -103,34 +116,35 @@
     <!-- Reviews & Feedback Section -->
     <div class="row pt-5 border-top border-secondary border-opacity-50">
         <div class="col-lg-7">
-            <h3 class="font-heading text-white mb-4"><i class="bi bi-star-fill text-white me-2"></i> Customer Feedback</h3>
+            <h3 class="font-heading text-white mb-4"><i class="bi bi-star-fill text-white me-2"></i> Customer Feedback
+            </h3>
 
             {% if product.reviews.all %}
-                <div class="d-flex flex-column gap-3 mb-4">
-                    {% for review in product.reviews.all %}
-                        <div class="zenzee-card p-4">
-                            <div class="d-flex justify-content-between align-items-center mb-2">
-                                <div class="d-flex align-items-center gap-2">
-                                    <div class="bg-white text-dark rounded-circle fw-bold d-flex align-items-center justify-content-center" style="width: 32px; height: 32px;">
-                                        {{ review.user.username|slice:":1"|upper }}
-                                    </div>
-                                    <strong class="text-white">{{ review.user.username }}</strong>
-                                </div>
-                                <span class="text-white">
-                                    {% for i in "12345" %}
-                                        {% if forloop.counter <= review.rating %}★{% else %}☆{% endif %}
-                                    {% endfor %}
-                                </span>
+            <div class="d-flex flex-column gap-3 mb-4">
+                {% for review in product.reviews.all %}
+                <div class="zenzee-card p-4">
+                    <div class="d-flex justify-content-between align-items-center mb-2">
+                        <div class="d-flex align-items-center gap-2">
+                            <div class="bg-white text-dark rounded-circle fw-bold d-flex align-items-center justify-content-center"
+                                style="width: 32px; height: 32px;">
+                                {{ review.user.username|slice:":1"|upper }}
                             </div>
-                            <p class="text-light opacity-75 small mb-1">{{ review.comment }}</p>
-                            <span class="text-muted font-monospace" style="font-size: 0.7rem;">Verified Purchase • {{ review.created_at|date:"M d, Y" }}</span>
+                            <strong class="text-white">{{ review.user.username }}</strong>
                         </div>
-                    {% endfor %}
+                        <span class="text-white">
+                            {% for i in "12345" %}
+                            {% if forloop.counter <= review.rating %}★{% else %}☆{% endif %} {% endfor %} </span>
+                    </div>
+                    <p class="text-light opacity-75 small mb-1">{{ review.comment }}</p>
+                    <span class="text-muted font-monospace" style="font-size: 0.7rem;">Verified Purchase • {{
+                        review.created_at|date:"M d, Y" }}</span>
                 </div>
+                {% endfor %}
+            </div>
             {% else %}
-                <div class="zenzee-card p-4 text-center mb-4">
-                    <p class="text-muted mb-0">No reviews yet for this piece. Be the first to share your fit feedback!</p>
-                </div>
+            <div class="zenzee-card p-4 text-center mb-4">
+                <p class="text-muted mb-0">No reviews yet for this piece. Be the first to share your fit feedback!</p>
+            </div>
             {% endif %}
         </div>
 
@@ -138,26 +152,28 @@
             <div class="zenzee-card p-4">
                 <h5 class="font-heading text-white mb-3">Leave a Fit Review</h5>
                 {% if user.is_authenticated %}
-                    <form action="{% url 'add_review' product.id %}" method="POST">
-                        {% csrf_token %}
-                        <div class="mb-3">
-                            <label class="form-label text-muted small">Rating</label>
-                            <select name="rating" class="form-select bg-dark border-secondary text-white">
-                                <option value="5">⭐⭐⭐⭐⭐ (5/5 Exceptional)</option>
-                                <option value="4">⭐⭐⭐⭐ (4/5 Great Fit)</option>
-                                <option value="3">⭐⭐⭐ (3/5 Average)</option>
-                                <option value="2">⭐⭐ (2/5 Below Expectation)</option>
-                                <option value="1">⭐ (1/5 Poor)</option>
-                            </select>
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label text-muted small">Review Details</label>
-                            <textarea name="comment" class="form-control bg-dark border-secondary text-white" rows="3" placeholder="Share sizing comfort, GSM fabric feel, and aesthetic..." required></textarea>
-                        </div>
-                        <button type="submit" class="btn btn-zenzee-primary w-100 py-2">Submit Review</button>
-                    </form>
+                <form action="{% url 'add_review' product.id %}" method="POST">
+                    {% csrf_token %}
+                    <div class="mb-3">
+                        <label class="form-label text-muted small">Rating</label>
+                        <select name="rating" class="form-select bg-dark border-secondary text-white">
+                            <option value="5">⭐⭐⭐⭐⭐ (5/5 Exceptional)</option>
+                            <option value="4">⭐⭐⭐⭐ (4/5 Great Fit)</option>
+                            <option value="3">⭐⭐⭐ (3/5 Average)</option>
+                            <option value="2">⭐⭐ (2/5 Below Expectation)</option>
+                            <option value="1">⭐ (1/5 Poor)</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label text-muted small">Review Details</label>
+                        <textarea name="comment" class="form-control bg-dark border-secondary text-white" rows="3"
+                            placeholder="Share sizing comfort, GSM fabric feel, and aesthetic..." required></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-zenzee-primary w-100 py-2">Submit Review</button>
+                </form>
                 {% else %}
-                    <p class="text-muted small mb-0">Please <a href="{% url 'login' %}" class="text-white text-decoration-underline">Log In</a> to leave a review.</p>
+                <p class="text-muted small mb-0">Please <a href="{% url 'login' %}"
+                        class="text-white text-decoration-underline">Log In</a> to leave a review.</p>
                 {% endif %}
             </div>
         </div>
