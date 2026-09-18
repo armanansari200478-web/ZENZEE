@@ -1,0 +1,147 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>ZENZEE Viva Guide</title>
+<style>
+@page { size: A4; margin: 14mm; }
+* { box-sizing: border-box; }
+body { font-family: "Segoe UI", Arial, sans-serif; color:#18202b; line-height:1.42; font-size:10.5pt; margin:0; }
+h1 { color:#101827; font-size:29pt; margin:0 0 5px; letter-spacing:.4px; }
+h2 { color:#b4233f; font-size:18pt; border-bottom:2px solid #f1b24a; padding-bottom:4px; margin:25px 0 10px; }
+h3 { color:#172b4d; font-size:12.5pt; margin:13px 0 4px; }
+p { margin:5px 0 8px; }
+.cover { min-height:250mm; display:flex; flex-direction:column; justify-content:center; padding:18mm; background:linear-gradient(135deg,#fff7ed,#f8e9ed 58%,#e4eef8); border:1px solid #e7b2a8; }
+.cover .tag { color:#b4233f; font-weight:700; letter-spacing:2px; font-size:11pt; }
+.cover .subtitle { font-size:16pt; color:#354052; margin:8px 0 25px; }
+.badges { display:flex; flex-wrap:wrap; gap:7px; }
+.badge { border:1px solid #d9836d; background:#fff; padding:6px 10px; border-radius:14px; font-size:9pt; }
+.note { background:#fff7df; border-left:4px solid #e6a32a; padding:8px 11px; margin:9px 0; }
+.answer { background:#f5f8fc; border:1px solid #d7e0eb; border-radius:6px; padding:7px 10px; margin:7px 0; page-break-inside:avoid; }
+.q { font-weight:700; color:#172b4d; }
+.flow { display:flex; align-items:stretch; gap:6px; margin:10px 0 16px; page-break-inside:avoid; }
+.box { flex:1; min-height:54px; display:flex; align-items:center; justify-content:center; text-align:center; padding:7px; background:#eaf3ff; border:1px solid #76a8d8; border-radius:5px; font-weight:600; font-size:9pt; }
+.arrow { align-self:center; color:#b4233f; font-size:17pt; font-weight:bold; }
+.grid { display:grid; grid-template-columns:repeat(2,1fr); gap:7px; }
+.module { padding:8px; border-left:4px solid #b4233f; background:#fbf6f3; page-break-inside:avoid; }
+.module b { color:#172b4d; }
+table { width:100%; border-collapse:collapse; margin:8px 0 12px; font-size:9.3pt; }
+th { background:#172b4d; color:white; text-align:left; }
+th,td { border:1px solid #cbd5e1; padding:6px; vertical-align:top; }
+code { background:#eef1f5; padding:1px 4px; border-radius:3px; font-size:9pt; }
+ul { margin-top:4px; padding-left:20px; }
+li { margin:3px 0; }
+.small { color:#566274; font-size:9pt; }
+.pagebreak { page-break-before:always; }
+.footer { margin-top:20px; color:#687386; font-size:8.5pt; text-align:center; }
+</style>
+</head>
+<body>
+<section class="cover">
+  <div class="tag">VIVA PREPARATION HANDBOOK</div>
+  <h1>ZENZEE</h1>
+  <div class="subtitle">Django-based Youth Streetwear E-commerce Platform</div>
+  <p><b>Purpose:</b> Quick, honest and project-specific answers for your viva. Speak in your own words and show the live demo where possible.</p>
+  <div class="badges"><span class="badge">Django 5.2.16</span><span class="badge">Python</span><span class="badge">SQLite / PostgreSQL-ready</span><span class="badge">Razorpay Test Mode</span><span class="badge">Render Deployment</span></div>
+  <div class="note"><b>One-line introduction:</b> “ZENZEE is a modular Django fashion e-commerce platform with authentication, product discovery, cart, wishlist, checkout, test payments, order tracking, reviews, rule-based styling recommendations and an admin dashboard.”</div>
+</section>
+
+<h2>1. Project Snapshot</h2>
+<table><tr><th>Area</th><th>What ZENZEE uses</th></tr>
+<tr><td>Backend</td><td>Python and Django MTV architecture</td></tr>
+<tr><td>Frontend</td><td>Django templates, HTML, CSS, Bootstrap and JavaScript</td></tr>
+<tr><td>Database</td><td>Django ORM with SQLite locally; <code>DATABASE_URL</code> support for PostgreSQL</td></tr>
+<tr><td>Apps</td><td>8 custom apps: accounts, products, cart, wishlist, orders, reviews, ai, dashboard</td></tr>
+<tr><td>Payment</td><td>Razorpay sandbox/test integration with server-side signature verification</td></tr>
+<tr><td>Deployment</td><td>GitHub to Render, Gunicorn, WhiteNoise, migrations and collectstatic</td></tr>
+</table>
+
+<h2>2. Modules and Responsibilities</h2>
+<div class="grid">
+<div class="module"><b>accounts</b><br>Custom user, registration, login, logout and profile.</div>
+<div class="module"><b>products</b><br>Category, brand, size, product, images, pricing and inventory relation.</div>
+<div class="module"><b>cart</b><br>Guest session carts, user carts, quantities, subtotal and shipping.</div>
+<div class="module"><b>wishlist</b><br>Authenticated users save or remove products; uniqueness is enforced.</div>
+<div class="module"><b>orders</b><br>Checkout form, Order, OrderItem, COD, Razorpay and order history.</div>
+<div class="module"><b>reviews</b><br>Logged-in users submit product ratings and comments.</div>
+<div class="module"><b>ai</b><br>Rule-based product recommendations and chat history API.</div>
+<div class="module"><b>dashboard</b><br>Staff-only metrics: users, products, orders, revenue and recent orders.</div>
+</div>
+
+<h2>3. System Architecture Diagram</h2>
+<div class="flow"><div class="box">User Browser<br>HTML / CSS / JS</div><div class="arrow">→</div><div class="box">Django URLs<br><code>config.urls</code></div><div class="arrow">→</div><div class="box">App Views<br>business logic</div><div class="arrow">→</div><div class="box">Django ORM<br>Models / DB</div></div>
+<div class="flow"><div class="box">Templates<br>HTML response</div><div class="arrow">←</div><div class="box">Forms / Validation</div><div class="arrow">←</div><div class="box">Models<br>relations</div><div class="arrow">↔</div><div class="box">SQLite or PostgreSQL</div></div>
+<p class="small">External boundary: the orders view communicates with Razorpay only for online checkout; the server verifies the returned signature before marking payment successful.</p>
+
+<h2>4. Database Relationship Diagram</h2>
+<div class="flow"><div class="box">User</div><div class="arrow">1 → *</div><div class="box">Order</div><div class="arrow">1 → *</div><div class="box">OrderItem</div><div class="arrow">* → 1</div><div class="box">Product</div></div>
+<div class="flow"><div class="box">Product</div><div class="arrow">1 → *</div><div class="box">ProductImage</div><div class="arrow">1 → *</div><div class="box">ProductSize</div><div class="arrow">* → 1</div><div class="box">Size</div></div>
+<div class="flow"><div class="box">User</div><div class="arrow">1 → *</div><div class="box">Cart / Wishlist / Review / AI Chat</div><div class="arrow">* → 1</div><div class="box">Product</div></div>
+<p><b>Important design answer:</b> <code>OrderItem.price</code> stores a snapshot of the price at purchase time. Therefore, later product price changes do not alter old orders.</p>
+
+<h2>5. Main Inner Workings</h2>
+<h3>Homepage and product browsing</h3><p><code>/</code> calls <code>home_view</code>, queries featured products, falls back to recent products if none are featured, and renders <code>home.html</code>. Product listing supports category filtering, search with <code>Q</code> objects, and price/newest sorting.</p>
+<h3>Cart</h3><p>Logged-in users use a cart linked to their user. Guests receive a session key and use a session cart. A cart item combines product, optional size and quantity. Effective price is used for subtotal calculation.</p>
+<h3>Checkout</h3><p>The form validates shipping details and payment method. The server calculates subtotal, shipping and total, creates an Order, creates its OrderItems, clears the cart, then either confirms COD or opens the Razorpay payment page.</p>
+<h3>Price and shipping rules</h3><p>Discount price is used only when it exists and is lower than the original price. Shipping is ₹99 when subtotal is ₹1,499 or below, and free above ₹1,499.</p>
+
+<h2>6. Razorpay Flow Diagram</h2>
+<div class="flow"><div class="box">Checkout POST<br>create local Order</div><div class="arrow">→</div><div class="box">Server creates<br>Razorpay Order</div><div class="arrow">→</div><div class="box">Checkout.js<br>opens popup</div></div>
+<div class="flow"><div class="box">Razorpay returns<br>payment id + signature</div><div class="arrow">→</div><div class="box">Server verifies<br>signature</div><div class="arrow">→</div><div class="box">Set <code>is_paid=True</code><br>save payment id</div></div>
+<div class="answer"><span class="q">Q: Why multiply amount by 100?</span><br>Razorpay expects the smallest currency unit, paise. ₹100 becomes 10,000 paise.</div>
+<div class="answer"><span class="q">Q: Why not trust browser payment status?</span><br>Browser data can be modified. The server must verify the Razorpay signature using the secret key.</div>
+<div class="answer"><span class="q">Q: Is it real AI or real payment?</span><br>Razorpay is sandbox/test mode. The current AI stylist is a rule-based recommender using words such as hoodie, oversized, streetwear, cargo and budget.</div>
+
+<div class="pagebreak"></div>
+<h2>7. Most Likely Viva Questions and Answers</h2>
+<div class="answer"><span class="q">Q: Why Django?</span><br>Django gives routing, ORM, authentication, forms, templates, admin, middleware and security in one mature framework. That reduces development time for a database-driven e-commerce system.</div>
+<div class="answer"><span class="q">Q: What is MTV?</span><br>Model stores data, Template presents the UI and View processes requests and responses. It is Django’s version of the MVC idea.</div>
+<div class="answer"><span class="q">Q: What is <code>manage.py</code>?</span><br>The command-line entry point for <code>runserver</code>, <code>migrate</code>, <code>makemigrations</code>, <code>test</code> and <code>collectstatic</code>.</div>
+<div class="answer"><span class="q">Q: What is ORM?</span><br>Object Relational Mapping maps Python model classes to database tables and lets us query using Python instead of writing most SQL manually.</div>
+<div class="answer"><span class="q">Q: Why custom User model?</span><br>ZENZEE needs phone number, profile picture and bio in addition to Django’s standard authentication fields.</div>
+<div class="answer"><span class="q">Q: What do migrations do?</span><br>They version-control schema changes. <code>makemigrations</code> creates migration files and <code>migrate</code> applies them to the database.</div>
+<div class="answer"><span class="q">Q: What is CSRF?</span><br>Cross-Site Request Forgery protection prevents an unwanted state-changing request from another website using the user’s browser session.</div>
+<div class="answer"><span class="q">Q: Why use <code>login_required</code>?</span><br>It protects profile, order history, wishlist and review actions from anonymous users and redirects them to login.</div>
+<div class="answer"><span class="q">Q: What does WhiteNoise do?</span><br>It serves collected static CSS, JavaScript and assets directly from the Django deployment.</div>
+<div class="answer"><span class="q">Q: Why does Render start with <code>cd backend</code>?</span><br>The Django project package <code>config</code> and <code>manage.py</code> are inside <code>backend</code>, so Gunicorn must run from that directory to import <code>config.wsgi</code>.</div>
+<div class="answer"><span class="q">Q: What was the Render 500 problem?</span><br>The service started successfully, but the fresh deployment database had no schema because migrations were not run. The deployment command was updated to run migrations and collectstatic before Gunicorn.</div>
+<div class="answer"><span class="q">Q: What is the dashboard?</span><br>A staff-only view protected by <code>staff_member_required</code>. It aggregates users, products, orders and revenue and displays recent orders.</div>
+
+<h2>8. SDLC and Development Story</h2>
+<div class="flow"><div class="box">Requirement<br>fashion store needs</div><div class="arrow">→</div><div class="box">Design<br>apps + DB + UI</div><div class="arrow">→</div><div class="box">Development<br>Django features</div><div class="arrow">→</div><div class="box">Testing<br>unit + smoke</div><div class="arrow">→</div><div class="box">Deployment<br>Render</div></div>
+<table><tr><th>Stage</th><th>ZENZEE example</th></tr>
+<tr><td>Requirement analysis</td><td>Users need browsing, accounts, cart, wishlist, checkout, payment, orders, reviews and admin statistics.</td></tr>
+<tr><td>Design</td><td>Separated apps, relational models, URL routes, responsive templates and payment sequence.</td></tr>
+<tr><td>Implementation</td><td>Python/Django, ORM, forms, templates, Bootstrap, JavaScript and Razorpay SDK.</td></tr>
+<tr><td>Testing</td><td>Django TestCase, HTTP route smoke tests, migration checks and production configuration checks.</td></tr>
+<tr><td>Deployment</td><td>GitHub source, Render build, Gunicorn start, migrations and WhiteNoise static files.</td></tr>
+<tr><td>Maintenance</td><td>Improve storage, security, test coverage, monitoring and database durability.</td></tr>
+</table>
+
+<h2>9. Testing Status</h2>
+<div class="note"><b>Verified facts:</b> Django suite has 12 tests and all 12 pass when executed from the <code>backend</code> directory. Live public smoke checks returned HTTP 200 for homepage, products, login, register, AI stylist and cart. Django system check passes and migrations are applied.</div>
+<table><tr><th>Covered</th><th>Still needs dedicated tests</th></tr>
+<tr><td>User and superuser creation; account pages; profile redirect; AI API response; checkout rendering; payment field; product discount calculations.</td><td>Cart add/remove; wishlist toggle; review submission; complete order creation; Razorpay valid/invalid signatures; dashboard staff permissions; browser-level checkout.</td></tr>
+</table>
+<p><b>Correct test command:</b> <code>cd backend</code> then <code>python manage.py test</code>. Running from repository root can incorrectly report zero discovered tests because the Django project is nested.</p>
+
+<h2>10. Problems, Solutions and Limitations</h2>
+<table><tr><th>Problem / risk</th><th>Answer or solution</th></tr>
+<tr><td>Template syntax error</td><td>Corrected invalid Django conditional syntax in checkout template.</td></tr>
+<tr><td>Render could not import config</td><td>Started Gunicorn from <code>backend</code>.</td></tr>
+<tr><td>Render homepage 500</td><td>Added deployment-time migrations before starting the app.</td></tr>
+<tr><td>Static files warning</td><td>Added <code>collectstatic --noinput</code> and WhiteNoise support.</td></tr>
+<tr><td>SQLite durability</td><td>Use managed PostgreSQL for real production persistence.</td></tr>
+<tr><td>Media durability</td><td>Use cloud object storage for uploaded images.</td></tr>
+<tr><td>Payment security</td><td>Keep signature verification; disable demo fallback and validate gateway order ownership in production.</td></tr>
+<tr><td>Order privacy</td><td>Restrict order detail to the order owner or staff.</td></tr>
+</table>
+
+<h2>11. Demo Script</h2>
+<ol><li>Open live homepage and explain the project in one line.</li><li>Browse products, search/filter and open product detail.</li><li>Add product and size to cart; explain effective price and shipping.</li><li>Login, show wishlist and profile protection.</li><li>Open AI Stylist; enter “oversized hoodie under 1500”. Explain rule-based filtering.</li><li>Open checkout; explain COD and Razorpay test mode.</li><li>Place COD order and show order detail/history.</li><li>Explain Razorpay sequence and signature verification; do not claim a real charge.</li><li>Explain staff dashboard and deployment.</li><li>End with limitations and future improvements.</li></ol>
+
+<h2>12. Final 30-Second Answer</h2>
+<div class="note">“ZENZEE is a modular Django e-commerce application for youth streetwear. I separated the system into eight apps for maintainability. Django ORM manages users, products, cart, orders, reviews and wishlist data. Checkout supports COD and Razorpay sandbox payments, where the server verifies the payment signature. The AI stylist is currently rule-based and recommends products from keywords. The application is deployed on Render using Gunicorn and WhiteNoise. I tested 12 automated cases and live public routes, while future work includes PostgreSQL, cloud media storage, stronger order authorization and broader integration testing.”</div>
+<div class="footer">ZENZEE Viva Guide | Prepared from the current project source and verified test/deployment behavior</div>
+</body>
+</html>

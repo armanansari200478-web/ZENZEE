@@ -1,11 +1,11 @@
-# Railway Build Configuration
-[build.setup]
-# Set the working directory to backend for Django apps
-workDir = "backend"
+[phases.setup]
+  nixPkgs = ["python311", "gcc"]
 
-[build.nixpacks]
-# No additional config needed, Railway will detect Django/Python
+[phases.install]
+  cmds = [
+    "python -m pip install --upgrade pip",
+    "pip install -r requirements.txt"
+  ]
 
 [start]
-# Run from backend directory where manage.py and config are located
-cmd = "gunicorn config.wsgi:application --bind 0.0.0.0:${PORT:-8000} --workers 3 --log-file -"
+  cmd = "cd backend && gunicorn config.wsgi --log-file -"
