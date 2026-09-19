@@ -48,10 +48,10 @@
             <span class="text-muted small text-nowrap"><i class="bi bi-sort-down me-1"></i> Sort:</span>
             <select name="sort" class="form-select form-select-sm bg-dark border-secondary text-white rounded-2"
                 onchange="this.form.submit()" style="width: auto;">
-                <option value="">Featured First</option>
-                <option value="price_low">Price: Low to High</option>
-                <option value="price_high">Price: High to Low</option>
-                <option value="newest">Newest Drops</option>
+                <option value="" {% if not selected_sort %}selected{% endif %}>Featured First</option>
+                <option value="price_low" {% if selected_sort == 'price_low' %}selected{% endif %}>Price: Low to High</option>
+                <option value="price_high" {% if selected_sort == 'price_high' %}selected{% endif %}>Price: High to Low</option>
+                <option value="newest" {% if selected_sort == 'newest' %}selected{% endif %}>Newest Drops</option>
             </select>
         </form>
     </div>

@@ -28,3 +28,26 @@ class ProductPricingTests(TestCase):
 
     def test_discount_percentage_is_calculated_correctly(self):
         self.assertEqual(self.product.get_discount_percentage(), 35)
+
+
+class ProductListViewTests(TestCase):
+    def setUp(self):
+        self.category = Category.objects.create(name='Oversized', slug='oversized')
+        self.product = Product.objects.create(
+            name='Oversized Heavyweight Hoodie',
+            slug='oversized-heavyweight-hoodie',
+            category=self.category,
+            description='Test description',
+            price=Decimal('2999.00'),
+            is_available=True,
+        )
+
+    def test_category_filter_by_slug_and_name(self):
+        response = self.client.get('/products/', {'category': 'oversized'})
+        self.assertEqual(response.status_code, 200)
+        self.assertIn(self.product, response.context['products'])
+
+    def test_sort_selection_retained_in_context(self):
+        response = self.client.get('/products/', {'sort': 'price_low'})
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.context['selected_sort'], 'price_low')

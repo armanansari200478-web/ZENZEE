@@ -17,3 +17,8 @@ backend/staticfiles/
 
 # Logs
 *.log
+
+# Viva preparation files
+*viva*
+*Viva*
+docs/

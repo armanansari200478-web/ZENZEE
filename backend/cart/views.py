@@ -44,6 +44,8 @@ def cart_add_view(request, product_id):
 
     size_id = request.POST.get('size_id')
     size = get_object_or_404(Size, id=size_id) if size_id else None
+    if not size and product.product_sizes.exists():
+        size = product.product_sizes.first().size
 
     cart_item, created = CartItem.objects.get_or_create(
         cart=cart, product=product, size=size
@@ -55,6 +57,28 @@ def cart_add_view(request, product_id):
         messages.info(request, f"Updated quantity for {product.name}.")
     else:
         messages.success(request, f"Added {product.name} to your cart!")
+
+    return redirect('cart_detail')
+
+
+def cart_update_quantity_view(request, item_id):
+    """
+    Update quantity (increase or decrease) for a specific item in the cart.
+    """
+    cart = _get_cart(request)
+    cart_item = get_object_or_404(CartItem, id=item_id, cart=cart)
+    action = request.POST.get('action') or request.GET.get('action')
+
+    if action == 'increase':
+        cart_item.quantity += 1
+        cart_item.save()
+    elif action == 'decrease':
+        if cart_item.quantity > 1:
+            cart_item.quantity -= 1
+            cart_item.save()
+        else:
+            cart_item.delete()
+            messages.info(request, "Item removed from cart.")
 
     return redirect('cart_detail')
 

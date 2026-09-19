@@ -58,7 +58,13 @@
                                     </div>
                                 </td>
                                 <td class="text-light fw-semibold">₹{{ item.product.get_effective_price }}</td>
-                                <td class="text-light font-monospace">{{ item.quantity }}</td>
+                                <td class="text-light font-monospace">
+                                    <div class="d-inline-flex align-items-center border border-secondary rounded-2 overflow-hidden bg-dark">
+                                        <a href="{% url 'cart_update_quantity' item.id %}?action=decrease" class="btn btn-sm text-white px-2 py-0 text-decoration-none" title="Decrease quantity">-</a>
+                                        <span class="px-2 fw-bold text-white small">{{ item.quantity }}</span>
+                                        <a href="{% url 'cart_update_quantity' item.id %}?action=increase" class="btn btn-sm text-white px-2 py-0 text-decoration-none" title="Increase quantity">+</a>
+                                    </div>
+                                </td>
                                 <td class="fw-bold text-white font-monospace">₹{{ item.get_subtotal }}</td>
                                 <td class="text-end">
                                     <a href="{% url 'cart_remove' item.id %}"

@@ -14,7 +14,9 @@ def product_list_view(request):
     # Category Filter
     category_slug = request.GET.get('category')
     if category_slug:
-        products = products.filter(category__slug=category_slug)
+        products = products.filter(
+            Q(category__slug__iexact=category_slug) | Q(category__name__iexact=category_slug)
+        )
 
     # Search Query
     query = request.GET.get('q')
@@ -37,6 +39,7 @@ def product_list_view(request):
         'categories': categories,
         'brands': brands,
         'selected_category': category_slug,
+        'selected_sort': sort,
         'search_query': query,
     }
     return render(request, 'products/product_list.html', context)

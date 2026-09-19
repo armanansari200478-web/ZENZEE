@@ -48,7 +48,7 @@ if not SECRET_KEY:
 DEBUG = os.getenv('DEBUG', 'True') == 'True'
 
 # Render / local hosts
-allowed_hosts = os.getenv('ALLOWED_HOSTS', '127.0.0.1,localhost,.onrender.com')
+allowed_hosts = os.getenv('ALLOWED_HOSTS', '127.0.0.1,localhost,.onrender.com,testserver')
 ALLOWED_HOSTS = [host.strip() for host in allowed_hosts.split(',') if host.strip()]
 
 # Allow HTTPS Render domains and localhost for CSRF

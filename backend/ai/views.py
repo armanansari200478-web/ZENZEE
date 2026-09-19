@@ -5,6 +5,9 @@ from products.models import Product
 from .models import FashionAssistantChat
 
 
+import re
+
+
 def _build_fallback_recommendation(prompt):
     """
     Fallback recommendation engine for ZENZEE AI stylist.
@@ -13,12 +16,19 @@ def _build_fallback_recommendation(prompt):
     prompt_lower = prompt.lower()
     recommended_products = Product.objects.filter(is_available=True)
 
+    # Dynamic budget extraction
+    numbers = re.findall(r'\d+', prompt_lower)
+    budget_limit = int(numbers[0]) if numbers else None
+
+    if budget_limit:
+        recommended_products = recommended_products.filter(price__lte=budget_limit)
+
     if 'oversized' in prompt_lower or 'hoodie' in prompt_lower:
         recommended_products = recommended_products.filter(name__icontains='oversized') | recommended_products.filter(category__name__icontains='hoodie')
     elif 'streetwear' in prompt_lower or 'cargo' in prompt_lower:
         recommended_products = recommended_products.filter(category__name__icontains='streetwear') | recommended_products.filter(name__icontains='cargo')
-    elif 'budget' in prompt_lower or 'cheap' in prompt_lower or 'under' in prompt_lower:
-        recommended_products = recommended_products.filter(price__lte=1200)
+    elif not budget_limit and ('budget' in prompt_lower or 'cheap' in prompt_lower or 'under' in prompt_lower):
+        recommended_products = recommended_products.filter(price__lte=2000)
 
     if not recommended_products.exists():
         recommended_products = Product.objects.filter(is_featured=True)[:3]
