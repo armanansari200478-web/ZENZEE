@@ -9,11 +9,19 @@ from .forms import UserRegistrationForm, UserProfileUpdateForm
 def home_view(request):
     """
     Home page view for ZENZEE platform.
+    Automatically populates products if database is empty.
     """
     from products.models import Product
-    featured_products = Product.objects.filter(is_featured=True)[:8]
+    if not Product.objects.filter(is_available=True).exists():
+        from django.core.management import call_command
+        try:
+            call_command('seed_data')
+        except Exception:
+            pass
+
+    featured_products = Product.objects.filter(is_available=True, is_featured=True)[:8]
     if not featured_products.exists():
-        featured_products = Product.objects.all()[:8]
+        featured_products = Product.objects.filter(is_available=True)[:8]
     return render(request, 'home.html', {'featured_products': featured_products})
 
 

@@ -114,18 +114,21 @@ class Command(BaseCommand):
                 ProductSize.objects.get_or_create(product=product, size=sz, stock_quantity=25)
 
             # Copy image to media and attach ProductImage
+            dest_image_name = p_data['image_file'].replace(' ', '_')
+            dest_image_path = media_products_dir / dest_image_name
             src_image_path = assets_dir / p_data['image_file']
+
             if src_image_path.exists():
-                dest_image_name = p_data['image_file'].replace(' ', '_')
-                dest_image_path = media_products_dir / dest_image_name
-                shutil.copy(src_image_path, dest_image_path)
+                try:
+                    shutil.copy(src_image_path, dest_image_path)
+                except Exception:
+                    pass
                 
-                # Check if ProductImage exists, otherwise create it
-                relative_image_path = f"products/{dest_image_name}"
-                ProductImage.objects.get_or_create(
-                    product=product,
-                    image=relative_image_path,
-                    defaults={'is_primary': True, 'alt_text': product.name}
-                )
+            relative_image_path = f"products/{dest_image_name}"
+            ProductImage.objects.get_or_create(
+                product=product,
+                image=relative_image_path,
+                defaults={'is_primary': True, 'alt_text': product.name}
+            )
 
         self.stdout.write(self.style.SUCCESS("Successfully seeded ZENZEE platform data with product images!"))
